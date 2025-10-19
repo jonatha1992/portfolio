@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-neutral-100 font-body text-slate-900 antialiased transition-colors duration-300 ease-in-out;
+}
+
+.dark body {
+  @apply bg-background text-slate-100;
+}
