@@ -11,7 +11,7 @@ import AchievementsSection from './sections/AchievementsSection'
 import { useLocale } from './context/LocaleContext'
 
 function App() {
-  const { content, ui } = useLocale()
+  const { content, ui, locale } = useLocale()
   const {
     personal,
     contact,
@@ -46,6 +46,7 @@ function App() {
         projects={projects}
         externalInfo={externalSources.projectsFromFirebase}
         copy={ui.sections.projects}
+        locale={locale}
       />
       <AchievementsSection achievements={achievements} copy={ui.sections.achievements} />
       <ExperienceSection experience={experience} copy={ui.sections.experience} />

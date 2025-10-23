@@ -19,6 +19,30 @@ export type Project = {
   }
 }
 
+// Firebase API Project structure
+export type FirebaseProject = {
+  id: string
+  title: string
+  description: string
+  image: string
+  previewLink: string
+  githubLink: string
+  createdAt: {
+    _seconds: number
+    _nanoseconds: number
+  }
+  updatedAt: {
+    _seconds: number
+    _nanoseconds: number
+  }
+}
+
+export type FirebaseProjectsResponse = {
+  success: boolean
+  count: number
+  projects: FirebaseProject[]
+}
+
 export type Achievement = {
   title: string
   description: string

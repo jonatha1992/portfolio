@@ -198,8 +198,8 @@ export const profileContentEs: ProfileContent = {
   externalSources: {
     projectsFromFirebase: {
       description:
-        'Proximamente podras sincronizar proyectos destacados desde Firebase Storage para mantener el portafolio actualizado sin redeploy.',
-      bucketPath: 'gs://jonathan-portfolio/projects.json',
+        'Próximamente podrás sincronizar proyectos desde la API de Firebase una vez que se agregue soporte multi-idioma en el backend.',
+      bucketPath: 'https://tecnofuision-it.web.app/api/projects',
       enabled: false,
     },
   },
