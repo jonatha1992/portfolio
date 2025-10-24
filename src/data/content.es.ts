@@ -198,9 +198,9 @@ export const profileContentEs: ProfileContent = {
   externalSources: {
     projectsFromFirebase: {
       description:
-        'Próximamente podrás sincronizar proyectos desde la API de Firebase una vez que se agregue soporte multi-idioma en el backend.',
-      bucketPath: 'https://tecnofuision-it.web.app/api/projects',
-      enabled: false,
+        'Los proyectos se cargan dinámicamente desde Firebase Cloud Functions con soporte multi-idioma.',
+      bucketPath: 'https://us-central1-tecnofuision-it.cloudfunctions.net/getProjects',
+      enabled: true,
     },
   },
 }

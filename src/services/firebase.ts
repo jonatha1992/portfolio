@@ -1,6 +1,6 @@
 import type { FirebaseProjectsResponse, FirebaseProject, Project, Locale } from '../data/types'
 
-const FIREBASE_API_URL = 'https://tecnofuision-it.web.app/api/projects'
+const FIREBASE_API_URL = 'https://us-central1-tecnofuision-it.cloudfunctions.net/getProjects'
 
 /**
  * Fetches projects from Firebase API
@@ -62,5 +62,10 @@ export function transformFirebaseProject(firebaseProject: FirebaseProject): Proj
  */
 export async function getPortfolioProjectsFromFirebase(locale?: Locale): Promise<Project[]> {
   const firebaseProjects = await fetchFirebaseProjects(locale)
+
+  if (!firebaseProjects.length) {
+    return []
+  }
+
   return firebaseProjects.map(transformFirebaseProject)
 }
