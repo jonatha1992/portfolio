@@ -1,0 +1,8 @@
+# robots.txt para Jonathan Correa Portfolio
+# Permite el rastreo completo del sitio por todos los motores de búsqueda
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://jonathancorrea-2f2de.web.app/sitemap.xml
