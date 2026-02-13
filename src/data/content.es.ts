@@ -123,12 +123,7 @@ export const profileContentEs: ProfileContent = {
       institution: 'Universidad Abierta Interamericana (UAI)',
       program: 'Ingenieria en Sistemas Informaticos (4.º anio) · Titulo intermedio obtenido: Analista Programador',
       period: '2019 — Actualidad',
-    },
-    {
-      institution: 'Instituto Universitario de la Policia Federal Argentina',
-      program: 'Tecnicatura en Analisis de Sistemas',
-      period: '2010 — 2013',
-    },
+    }
   ],
   certifications: [
     {
