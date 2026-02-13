@@ -131,7 +131,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const renderProject = (project: Project) => (
     <article
       key={project.title}
-      className="group grid h-full w-full min-w-0 cursor-pointer gap-3 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-4 text-center shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
+      className="group grid h-full w-full min-w-0 cursor-pointer gap-2.5 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-3.5 text-center shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
       onClick={() => openProjectModal(project)}
       onKeyDown={(event) => handleCardKeyDown(event, project)}
       role="button"
@@ -144,7 +144,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
           <ImageWithLoader
             src={project.media.src}
             alt={project.media.alt}
-            containerClassName="h-40 w-full"
+            containerClassName="h-36 w-full"
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
             spinnerDelayMs={0}
@@ -157,7 +157,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       {!project.media && project.status && <div className="flex justify-center">{renderStatusBadge(project.status)}</div>}
 
       <div className="min-w-0">
-        <h3 className="break-words font-display text-lg font-semibold leading-tight text-slate-900 dark:text-white sm:text-xl">
+        <h3 className="break-words font-display text-base font-semibold leading-tight text-slate-900 dark:text-white sm:text-lg">
           {project.title}
         </h3>
         <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">{project.role}</p>
@@ -237,7 +237,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   )
 
   return (
-    <section id="proyectos" className="w-full space-y-4">
+    <section id="proyectos" className="w-full space-y-3">
       <SectionHeader
         eyebrow={copy.eyebrow}
         title={copy.title}
@@ -252,7 +252,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
           </div>
         </div>
       ) : (
-        <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">{displayProjects.map(renderProject)}</div>
+      <div className="grid w-full gap-3.5 md:grid-cols-2 lg:grid-cols-3">{displayProjects.map(renderProject)}</div>
       )}
       {!externalInfo.enabled && (
         <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-100/80 p-3 text-sm text-slate-700 dark:border-slate-600 dark:bg-surface/70 dark:text-slate-200">
@@ -274,7 +274,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
         >
           <div className="mx-auto flex min-h-full w-full items-start justify-center py-4 sm:items-center">
             <article
-              className="w-full max-w-4xl overflow-y-auto rounded-3xl border border-neutral-200 bg-white p-5 shadow-2xl dark:border-slate-600 dark:bg-surface sm:p-6"
+              className="w-full max-w-4xl overflow-y-auto rounded-3xl border border-neutral-200 bg-white p-4 shadow-2xl dark:border-slate-600 dark:bg-surface sm:p-5"
               onClick={(event) => event.stopPropagation()}
             >
             <div className="mb-4 flex items-start justify-between gap-3">
@@ -282,7 +282,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.status && <Pill label={`${copy.statusLabel}: ${selectedProject.status}`} />}
                 </div>
-                <h3 id="project-modal-title" className="font-display text-2xl font-semibold text-slate-900 dark:text-white">
+                <h3 id="project-modal-title" className="font-display text-xl font-semibold text-slate-900 dark:text-white">
                   {selectedProject.title}
                 </h3>
                 <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">{selectedProject.role}</p>
@@ -301,7 +301,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                 <ImageWithLoader
                   src={selectedProject.media.src}
                   alt={selectedProject.media.alt}
-                  containerClassName="h-56 w-full sm:h-64"
+                  containerClassName="h-52 w-full sm:h-60"
                   className="h-full w-full object-cover"
                   loading="lazy"
                   spinnerDelayMs={0}
@@ -310,7 +310,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                 />
               </div>
             )}
-            <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
+            <p className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
               {selectedProject.summary.trim() || (locale === 'es' ? 'Sin descripcion disponible.' : 'No description available.')}
             </p>
             {selectedProject.highlights.length > 0 && (

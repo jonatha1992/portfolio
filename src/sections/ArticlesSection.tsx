@@ -16,21 +16,21 @@ const ArticlesSection = ({ articles, copy }: ArticlesSectionProps) => {
   }
 
   return (
-    <section id="articulos" className="space-y-8">
+    <section id="articulos" className="space-y-6">
       <SectionHeader
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
         icon={<NewspaperIcon className="h-6 w-6" />}
       />
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         {articles.map((article) => (
           <article
             key={article.title}
-            className="group rounded-3xl border border-neutral-300 bg-white p-6 shadow-soft transition hover:-translate-y-1.5 hover:border-primary-light hover:shadow-glow dark:border-slate-700 dark:bg-surface"
+            className="group rounded-3xl border border-neutral-300 bg-white p-5 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow dark:border-slate-700 dark:bg-surface"
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-white">{article.title}</h3>
+              <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white">{article.title}</h3>
               <Pill label={copy.upcomingLabel} variant="primary" />
             </div>
             <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{article.description}</p>

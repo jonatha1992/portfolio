@@ -362,13 +362,13 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
   }
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex max-h-[90vh] w-[min(95vw,420px)] flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 z-50 flex max-h-[90vh] w-[min(95vw,390px)] flex-col items-end gap-2.5">
       {!isOpen && (
         <button
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label={copy.openLabel}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/35 transition hover:bg-primary-light"
+          className="inline-flex items-center gap-2 rounded-full bg-primary px-3.5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-primary/35 transition hover:bg-primary-light"
         >
           <ChatBubbleLeftRightIcon className="h-5 w-5" />
           <span>{copy.openLabel}</span>
@@ -376,8 +376,8 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
       )}
 
       {isOpen && (
-        <section className="flex h-[min(78vh,640px)] w-full flex-col overflow-hidden rounded-2xl border border-neutral-300 bg-white shadow-2xl dark:border-slate-700 dark:bg-surface">
-          <header className="flex items-start justify-between gap-3 border-b border-neutral-300 bg-gradient-to-r from-primary/10 via-white to-accent/15 px-4 py-3 dark:border-slate-700 dark:from-primary/20 dark:via-surface dark:to-primary/10">
+        <section className="flex h-[min(74vh,600px)] w-full flex-col overflow-hidden rounded-2xl border border-neutral-300 bg-white shadow-2xl dark:border-slate-700 dark:bg-surface">
+          <header className="flex items-start justify-between gap-3 border-b border-neutral-300 bg-gradient-to-r from-primary/10 via-white to-accent/15 px-3 py-2.5 dark:border-slate-700 dark:from-primary/20 dark:via-surface dark:to-primary/10">
             <div className="min-w-0 space-y-1">
               <p className="flex items-center gap-2 font-display text-sm font-semibold text-slate-900 dark:text-white">
                 <SparklesIcon className="h-4 w-4 text-primary-dark dark:text-primary-light" />
@@ -390,7 +390,7 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
                 type="button"
                 onClick={resetChat}
                 aria-label={copy.clearLabel}
-                className="rounded-lg p-2 text-slate-500 transition hover:bg-white/80 hover:text-primary dark:text-slate-300 dark:hover:bg-slate-700"
+                className="rounded-lg p-1.5 text-slate-500 transition hover:bg-white/80 hover:text-primary dark:text-slate-300 dark:hover:bg-slate-700"
               >
                 <ArrowPathIcon className="h-5 w-5" />
               </button>
@@ -398,7 +398,7 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
                 type="button"
                 onClick={() => setIsOpen(false)}
                 aria-label={copy.closeLabel}
-                className="rounded-lg p-2 text-slate-500 transition hover:bg-white/80 hover:text-primary dark:text-slate-300 dark:hover:bg-slate-700"
+                className="rounded-lg p-1.5 text-slate-500 transition hover:bg-white/80 hover:text-primary dark:text-slate-300 dark:hover:bg-slate-700"
               >
                 <XMarkIcon className="h-5 w-5" />
               </button>
@@ -406,7 +406,7 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
           </header>
 
           <div className="flex min-h-0 flex-1 flex-col">
-            <div className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            <div className="flex-1 space-y-3 overflow-y-auto px-3 py-3">
               {!hasUserMessages && (
                 <div className="flex flex-wrap gap-2">
                   {copy.quickPrompts.map((prompt) => (
@@ -452,7 +452,7 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
 
             <form
               onSubmit={handleSubmit}
-              className="border-t border-neutral-300 bg-white p-3 dark:border-slate-700 dark:bg-surface"
+              className="border-t border-neutral-300 bg-white p-2.5 dark:border-slate-700 dark:bg-surface"
             >
               <div className="flex items-center gap-2">
                 <input

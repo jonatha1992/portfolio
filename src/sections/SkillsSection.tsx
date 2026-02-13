@@ -12,20 +12,20 @@ type SkillsSectionProps = {
 
 const SkillsSection = ({ skills, copy }: SkillsSectionProps) => {
   return (
-    <section id="habilidades" className="space-y-8">
+    <section id="habilidades" className="space-y-6">
       <SectionHeader
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
         icon={<CpuChipIcon className="h-6 w-6" />}
       />
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         {skills.map((category) => (
           <article
             key={category.label}
-            className="group rounded-2xl border border-neutral-300 bg-white p-6 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow dark:border-slate-700 dark:bg-surface"
+            className="group rounded-2xl border border-neutral-300 bg-white p-5 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow dark:border-slate-700 dark:bg-surface"
           >
-            <h3 className="mb-3 font-display text-lg font-semibold text-slate-900 dark:text-white">
+            <h3 className="mb-2.5 font-display text-base font-semibold text-slate-900 dark:text-white">
               {category.label}
             </h3>
             <div className="flex flex-wrap gap-2">

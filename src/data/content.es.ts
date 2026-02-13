@@ -3,11 +3,11 @@ import type { ProfileContent } from './types'
 export const profileContentEs: ProfileContent = {
   personal: {
     name: 'Jonathan Correa',
-    headline: 'Analista Programador',
-    roles: ['Data Engineer', 'Senior Python Developer'],
+    headline: 'Ingeniero de Software Full Stack',
+    roles: ['Ingeniero de Software Full Stack', 'Senior Python Developer', 'Data Engineer'],
     availability: 'Disponible para nuevas oportunidades laborales',
     summary:
-      'Senior Python Developer y Data Engineer orientado a automatizar procesos criticos, disenar pipelines resilientes y entregar productos digitales end-to-end. Desde 2015 formo parte del personal IT de la Policia de Seguridad Aeroportuaria liderando iniciativas con Python, Django, Flask y notebooks colaborativos para soluciones seguras y medibles.',
+      'Ingeniero de Software Full Stack, Senior Python Developer y Data Engineer orientado a automatizar procesos criticos, disenar pipelines resilientes y construir productos digitales end-to-end. Desde 2015 formo parte del personal IT de la Policia de Seguridad Aeroportuaria, liderando iniciativas con Python, Django, Flask, React y Next.js, e integrando IA generativa para acelerar analisis, documentacion tecnica y toma de decisiones.',
     location: 'Buenos Aires, Argentina',
     photo: '/assets/profile/jonathan-correa.jpg',
   },
@@ -18,7 +18,7 @@ export const profileContentEs: ProfileContent = {
     },
     {
       label: 'Frameworks y librerias',
-      items: ['React', 'FastAPI', 'Flask', 'Django', '.NET', 'Pandas', 'NumPy', 'TensorFlow'],
+      items: ['React', 'Next.js', 'FastAPI', 'Flask', 'Django', '.NET', 'Pandas', 'NumPy', 'TensorFlow'],
     },
     {
       label: 'Cloud y DevOps',
@@ -31,6 +31,10 @@ export const profileContentEs: ProfileContent = {
     {
       label: 'Computer Vision y ML',
       items: ['OpenCV', 'Scikit-learn', 'MLOps', 'Modelos Predictivos'],
+    },
+    {
+      label: 'Automatizacion e IA generativa',
+      items: ['Automatizacion de Procesos', 'Prompt Engineering', 'OpenAI API', 'Asistentes IA'],
     },
     {
       label: 'Herramientas',
@@ -108,20 +112,20 @@ export const profileContentEs: ProfileContent = {
   experience: [
     {
       company: 'Policia de Seguridad Aeroportuaria',
-      role: 'Sr. Python Developer & Data Engineer',
+      role: 'Ingeniero de Software Full Stack | Sr. Python Developer & Data Engineer',
       period: '2015 — Actualidad',
       responsibilities: [
-        'Lidero proyectos de automatizacion, analitica avanzada y desarrollo full stack orientados a seguridad aeroportuaria.',
-        'Orquesto pipelines de datos y APIs en Python (Django, Flask, FastAPI) integrando fuentes heterogeneas.',
-        'Implemento MLOps, computer vision y dashboards ejecutivos con monitoreo continuo y metricas de impacto.',
+        'Lidero proyectos de automatizacion de procesos, analitica avanzada y desarrollo full stack orientados a seguridad aeroportuaria.',
+        'Orquesto pipelines de datos y APIs en Python (Django, Flask, FastAPI), integrando fuentes heterogeneas y frontends con React y Next.js.',
+        'Implemento MLOps, computer vision, dashboards ejecutivos y flujos asistidos por IA generativa con monitoreo continuo y metricas de impacto.',
       ],
-      stack: ['Python', 'Django', 'Flask', 'C#', 'React', 'Power BI', 'Airflow', 'TensorFlow'],
+      stack: ['Python', 'Django', 'Flask', 'FastAPI', 'React', 'Next.js', 'C#', 'Power BI', 'Airflow', 'TensorFlow', 'OpenAI API'],
     },
   ],
   education: [
     {
       institution: 'Universidad Abierta Interamericana (UAI)',
-      program: 'Ingenieria en Sistemas Informaticos (4.º anio) · Titulo intermedio obtenido: Analista Programador',
+      program: 'Ingenieria en Sistemas Informaticos (4.º año) · Titulo intermedio obtenido: Analista Programador',
       period: '2019 — Actualidad',
     }
   ],
@@ -165,20 +169,20 @@ export const profileContentEs: ProfileContent = {
   timeline: [
     {
       type: 'work',
-      title: 'Analista Programador & Data Engineer',
+      title: 'Ingeniero de Software Full Stack & Data Engineer',
       organization: 'Policia de Seguridad Aeroportuaria',
       from: '2015',
       description:
-        'Responsable de automatizacion, inteligencia de datos y despliegues TI criticos como referente senior de Python.',
-      tech: ['Python', 'Django', 'React', 'Power BI'],
+        'Responsable de automatizacion de procesos, inteligencia de datos, soluciones full stack e integraciones de IA generativa en despliegues TI criticos.',
+      tech: ['Python', 'Django', 'React', 'Next.js', 'Power BI', 'OpenAI API'],
     },
     {
       type: 'education',
-      title: 'Ingenieria en Sistemas Informaticos (4.º anio)',
+      title: 'Ingenieria en Sistemas Informaticos (4.º año)',
       organization: 'Universidad Abierta Interamericana (UAI)',
       from: '2019',
       description:
-        'Cursando cuarto anio en la UAI con el titulo intermedio de Analista Programador ya obtenido, profundizando en arquitectura de software y sistemas distribuidos.',
+        'Cursando cuarto año en la UAI con el titulo intermedio de Analista Programador ya obtenido, profundizando en arquitectura de software y sistemas distribuidos.',
       tech: ['Python', 'Sistemas Distribuidos', 'Arquitectura de Software'],
     },
     {
@@ -201,4 +205,3 @@ export const profileContentEs: ProfileContent = {
 }
 
 export default profileContentEs
-

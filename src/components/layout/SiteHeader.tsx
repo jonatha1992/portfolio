@@ -23,9 +23,9 @@ const SiteHeader = ({ navItems, name, headline }: SiteHeaderProps) => {
 
   return (
     <header className="sticky top-0 z-40 border-b border-neutral-300 bg-white/95 backdrop-blur-lg shadow-sm dark:border-slate-700 dark:bg-surface/85">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 md:px-8">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 md:px-6">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 via-white to-primary/10 font-display text-base font-semibold text-primary-dark shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 via-white to-primary/10 font-display text-sm font-semibold text-primary-dark shadow-sm">
             {name
               .split(' ')
               .map((part) => part[0])
@@ -34,12 +34,12 @@ const SiteHeader = ({ navItems, name, headline }: SiteHeaderProps) => {
               .toUpperCase()}
           </div>
           <div>
-            <p className="font-display text-lg font-semibold text-neutral-900 dark:text-white">{name}</p>
+            <p className="font-display text-base font-semibold text-neutral-900 dark:text-white">{name}</p>
             <p className="text-xs font-medium text-slate-500 dark:text-slate-300">{headline}</p>
           </div>
         </div>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-4 md:flex">
           {navItems.map((item) => (
             <a
               key={item.id}
@@ -70,8 +70,8 @@ const SiteHeader = ({ navItems, name, headline }: SiteHeaderProps) => {
         </div>
       </div>
       {isOpen && (
-        <div className="px-4 pb-4 md:hidden">
-          <div className="flex flex-col gap-4 rounded-xl border border-neutral-300 bg-white p-4 shadow-soft dark:border-slate-600 dark:bg-surface">
+        <div className="px-4 pb-3 md:hidden">
+          <div className="flex flex-col gap-3 rounded-xl border border-neutral-300 bg-white p-3 shadow-soft dark:border-slate-600 dark:bg-surface">
             {navItems.map((item) => (
               <a
                 key={item.id}

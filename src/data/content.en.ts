@@ -3,11 +3,11 @@ import type { ProfileContent } from './types'
 export const profileContentEn: ProfileContent = {
   personal: {
     name: 'Jonathan Correa',
-    headline: 'Software Analyst',
-    roles: ['Data Engineer', 'Senior Python Developer'],
+    headline: 'Software Engineer',
+    roles: ['Full Stack Software Engineer', 'Senior Python Developer', 'Data Engineer'],
     availability: 'Open to new job opportunities',
     summary:
-      'Senior Python Developer and Data Engineer focused on automating critical processes, building resilient data pipelines, and shipping end-to-end digital products. Since 2015 I have served as part of the Airport Security Police IT personnel, leading initiatives with Python, Django, Flask, and collaborative notebooks to deliver secure, measurable solutions.',
+      'Full Stack Software Engineer, Senior Python Developer, and Data Engineer focused on process automation, resilient data pipelines, and end-to-end digital products. Since 2015 I have served as part of the Airport Security Police IT personnel, leading initiatives with Python, Django, Flask, React, and Next.js, while integrating generative AI workflows to accelerate analysis, technical documentation, and decision-making.',
     location: 'Buenos Aires, Argentina',
     photo: '/assets/profile/jonathan-correa.jpg',
   },
@@ -18,7 +18,7 @@ export const profileContentEn: ProfileContent = {
     },
     {
       label: 'Frameworks & Libraries',
-      items: ['React', 'FastAPI', 'Flask', 'Django', '.NET', 'Pandas', 'NumPy', 'TensorFlow'],
+      items: ['React', 'Next.js', 'FastAPI', 'Flask', 'Django', '.NET', 'Pandas', 'NumPy', 'TensorFlow'],
     },
     {
       label: 'Cloud & DevOps',
@@ -31,6 +31,10 @@ export const profileContentEn: ProfileContent = {
     {
       label: 'Computer Vision & ML',
       items: ['OpenCV', 'Scikit-learn', 'MLOps', 'Predictive Models'],
+    },
+    {
+      label: 'Automation & Generative AI',
+      items: ['Process Automation', 'Prompt Engineering', 'OpenAI API', 'AI Assistants'],
     },
     {
       label: 'Tooling',
@@ -108,14 +112,14 @@ export const profileContentEn: ProfileContent = {
   experience: [
     {
       company: 'Airport Security Police',
-      role: 'Sr. Python Developer & Data Engineer',
+      role: 'Full Stack Software Engineer | Sr. Python Developer & Data Engineer',
       period: '2015 — Present',
       responsibilities: [
-        'Lead automation, advanced analytics, and full stack projects focused on airport security.',
-        'Orchestrate data pipelines and Python APIs (Django, Flask, FastAPI) integrating heterogeneous sources.',
-        'Implement MLOps, computer vision, and executive dashboards with continuous monitoring and impact metrics.',
+        'Lead process automation, advanced analytics, and full stack projects focused on airport security.',
+        'Orchestrate data pipelines and Python APIs (Django, Flask, FastAPI), integrating heterogeneous sources and frontend products with React and Next.js.',
+        'Implement MLOps, computer vision, executive dashboards, and generative AI-assisted workflows with continuous monitoring and impact metrics.',
       ],
-      stack: ['Python', 'Django', 'Flask', 'C#', 'React', 'Power BI', 'Airflow', 'TensorFlow'],
+      stack: ['Python', 'Django', 'Flask', 'FastAPI', 'React', 'Next.js', 'C#', 'Power BI', 'Airflow', 'TensorFlow', 'OpenAI API'],
     },
   ],
   education: [
@@ -170,12 +174,12 @@ export const profileContentEn: ProfileContent = {
   timeline: [
     {
       type: 'work',
-      title: 'Analyst Programmer & Data Engineer',
+      title: 'Full Stack Software Engineer & Data Engineer',
       organization: 'Airport Security Police',
       from: '2015',
       description:
-        'Lead automation, data intelligence, and mission-critical IT deployments as the senior Python reference.',
-      tech: ['Python', 'Django', 'React', 'Power BI'],
+        'Lead process automation, data intelligence, full stack products, and generative AI integrations for mission-critical IT deployments.',
+      tech: ['Python', 'Django', 'React', 'Next.js', 'Power BI', 'OpenAI API'],
     },
     {
       type: 'education',

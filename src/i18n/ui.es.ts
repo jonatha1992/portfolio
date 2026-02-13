@@ -45,7 +45,7 @@ export const uiEs: UiCopy = {
       eyebrow: 'Stack principal',
       title: 'Tecnologias con las que construyo impacto',
       description:
-        'Experiencia comprobada en desarrollo full stack, ingenieria de datos y analitica avanzada para la operacion aeroportuaria.',
+        'Experiencia comprobada en desarrollo full stack con Python, React y Next.js, automatizacion de procesos e integracion de IA generativa para la operacion aeroportuaria.',
     },
     projects: {
       eyebrow: 'Casos reales',
@@ -71,7 +71,8 @@ export const uiEs: UiCopy = {
     experience: {
       eyebrow: 'Trayectoria profesional',
       title: 'Experiencia relevante',
-      description: 'Mas de 9 anos desarrollando soluciones criticas para la Policia de Seguridad Aeroportuaria.',
+      description:
+        'Mas de 9 años desarrollando soluciones criticas como Ingeniero de Software Full Stack y Senior Python Developer en la Policia de Seguridad Aeroportuaria.',
     },
     education: {
       eyebrow: 'Formacion continua',

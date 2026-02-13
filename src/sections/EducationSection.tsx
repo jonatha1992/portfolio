@@ -12,19 +12,19 @@ type EducationSectionProps = {
 
 const EducationSection = ({ education, certifications, copy }: EducationSectionProps) => {
   return (
-    <section id="formacion" className="space-y-8">
+    <section id="formacion" className="space-y-6">
       <SectionHeader
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
         icon={<AcademicCapIcon className="h-6 w-6" />}
       />
-      <div className="grid gap-6 md:grid-cols-2">
-        <article className="rounded-3xl border border-neutral-300 bg-white p-6 shadow-soft dark:border-slate-700 dark:bg-surface">
-          <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-white">
+      <div className="grid gap-4 md:grid-cols-2">
+        <article className="rounded-3xl border border-neutral-300 bg-white p-5 shadow-soft dark:border-slate-700 dark:bg-surface">
+          <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white">
             {copy.educationHeading}
           </h3>
-          <ul className="mt-4 space-y-4">
+          <ul className="mt-3 space-y-3">
             {education.map((item) => (
               <li key={`${item.institution}-${item.program}`} className="space-y-1">
                 <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{item.program}</p>
@@ -34,11 +34,11 @@ const EducationSection = ({ education, certifications, copy }: EducationSectionP
             ))}
           </ul>
         </article>
-        <article className="rounded-3xl border border-neutral-300 bg-white p-6 shadow-soft dark:border-slate-700 dark:bg-surface">
-          <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-white">
+        <article className="rounded-3xl border border-neutral-300 bg-white p-5 shadow-soft dark:border-slate-700 dark:bg-surface">
+          <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white">
             {copy.certificationsHeading}
           </h3>
-          <ul className="mt-4 space-y-4">
+          <ul className="mt-3 space-y-3">
             {certifications.map((item) => (
               <li key={`${item.name}-${item.issuer}`} className="space-y-1">
                 <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{item.name}</p>
