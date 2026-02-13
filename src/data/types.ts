@@ -12,6 +12,9 @@ export type Project = {
   stack: string[]
   codeUrl?: string
   liveUrl?: string
+  readmeUrl?: string
+  status?: string
+  hasReadme?: boolean
   media?: {
     type: 'image' | 'video'
     src: string
@@ -19,27 +22,34 @@ export type Project = {
   }
 }
 
+export type FirebaseTimestamp = {
+  _seconds: number
+  _nanoseconds: number
+}
+
 // Firebase API Project structure
 export type FirebaseProject = {
   id: string
   title: string
-  description: string
-  image: string
-  previewLink: string
-  githubLink: string
-  createdAt: {
-    _seconds: number
-    _nanoseconds: number
-  }
-  updatedAt: {
-    _seconds: number
-    _nanoseconds: number
-  }
+  description?: string
+  image?: string
+  previewLink?: string
+  githubLink?: string
+  technologies?: string[]
+  status?: string
+  isDeployed?: boolean
+  readmeUrl?: string
+  readmeFileName?: string
+  hasReadme?: boolean
+  createdAt?: FirebaseTimestamp
+  updatedAt?: FirebaseTimestamp
 }
 
 export type FirebaseProjectsResponse = {
   success: boolean
   count: number
+  limit?: number
+  includeReadme?: boolean
   projects: FirebaseProject[]
 }
 

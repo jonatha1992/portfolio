@@ -36,6 +36,11 @@ export const uiEs: UiCopy = {
         'Estos proyectos se definen de forma estatica por ahora. Cuando conectes Firebase Storage, podras cargar el contenido dinamicamente desde {bucket}.',
       codeCta: 'Ver codigo',
       liveCta: 'Ver demo',
+      readmeCta: 'Ver README',
+      viewMoreCta: 'Ver detalles',
+      closeModalLabel: 'Cerrar detalle del proyecto',
+      statusLabel: 'Estado',
+      loadingLabel: 'Cargando proyectos...',
     },
     achievements: {
       eyebrow: 'Impacto medible',

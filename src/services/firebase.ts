@@ -1,4 +1,10 @@
-import type { FirebaseProjectsResponse, FirebaseProject, Project, Locale } from '../data/types'
+import type {
+  FirebaseProjectsResponse,
+  FirebaseProject,
+  FirebaseTimestamp,
+  Project,
+  Locale,
+} from '../data/types'
 
 const FIREBASE_API_URL = 'https://us-central1-tecnofuision-it.cloudfunctions.net/getProjects'
 
@@ -29,23 +35,63 @@ export async function fetchFirebaseProjects(locale?: Locale): Promise<FirebasePr
   }
 }
 
+function isValidHttpUrl(value?: string): value is string {
+  if (!value) {
+    return false
+  }
+
+  const trimmed = value.trim()
+
+  if (!trimmed) {
+    return false
+  }
+
+  try {
+    const parsed = new URL(trimmed)
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
+function toDate(timestamp?: FirebaseTimestamp): Date | null {
+  if (!timestamp) {
+    return null
+  }
+
+  if (typeof timestamp._seconds !== 'number' || Number.isNaN(timestamp._seconds)) {
+    return null
+  }
+
+  return new Date(timestamp._seconds * 1000)
+}
+
+function getProjectRole(locale: Locale): string {
+  return locale === 'es' ? 'Proyecto' : 'Project'
+}
+
 /**
  * Transforms a Firebase project into the Portfolio Project format
  */
-export function transformFirebaseProject(firebaseProject: FirebaseProject): Project {
-  // Convert Firebase timestamp to a readable date
-  const createdDate = new Date(firebaseProject.createdAt._seconds * 1000)
-  const year = createdDate.getFullYear()
+export function transformFirebaseProject(firebaseProject: FirebaseProject, locale: Locale = 'es'): Project {
+  const createdDate = toDate(firebaseProject.createdAt)
+  const year = createdDate ? `${createdDate.getFullYear()}` : locale === 'es' ? 'Sin fecha' : 'No date'
+  const validPreviewUrl = isValidHttpUrl(firebaseProject.previewLink) ? firebaseProject.previewLink.trim() : undefined
+  const validGithubUrl = isValidHttpUrl(firebaseProject.githubLink) ? firebaseProject.githubLink.trim() : undefined
+  const validReadmeUrl = isValidHttpUrl(firebaseProject.readmeUrl) ? firebaseProject.readmeUrl.trim() : undefined
 
   return {
     title: firebaseProject.title,
-    role: 'Developer', // Default role - you can customize this
-    period: `${year}`,
-    summary: firebaseProject.description,
-    highlights: [], // Firebase projects don't have highlights
-    stack: [], // Firebase projects don't have stack info
-    codeUrl: firebaseProject.githubLink,
-    liveUrl: firebaseProject.previewLink,
+    role: getProjectRole(locale),
+    period: year,
+    summary: firebaseProject.description ?? '',
+    highlights: [],
+    stack: firebaseProject.technologies ?? [],
+    codeUrl: validGithubUrl,
+    liveUrl: validPreviewUrl,
+    readmeUrl: validReadmeUrl,
+    status: firebaseProject.status?.trim() || undefined,
+    hasReadme: firebaseProject.hasReadme ?? Boolean(validReadmeUrl),
     media: firebaseProject.image
       ? {
           type: 'image',
@@ -67,5 +113,5 @@ export async function getPortfolioProjectsFromFirebase(locale?: Locale): Promise
     return []
   }
 
-  return firebaseProjects.map(transformFirebaseProject)
+  return firebaseProjects.map((project) => transformFirebaseProject(project, locale ?? 'es'))
 }

@@ -27,6 +27,11 @@ export type UiCopy = {
       integrationDescription: string
       codeCta: string
       liveCta: string
+      readmeCta: string
+      viewMoreCta: string
+      closeModalLabel: string
+      statusLabel: string
+      loadingLabel: string
     }
     achievements: SectionCopy
     experience: SectionCopy

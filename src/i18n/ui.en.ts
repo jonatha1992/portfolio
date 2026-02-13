@@ -36,6 +36,11 @@ export const uiEn: UiCopy = {
         'Projects are static for now. Once Firebase Storage is connected, you can fetch them dynamically from {bucket}.',
       codeCta: 'View code',
       liveCta: 'View demo',
+      readmeCta: 'View README',
+      viewMoreCta: 'View details',
+      closeModalLabel: 'Close project details',
+      statusLabel: 'Status',
+      loadingLabel: 'Loading projects...',
     },
     achievements: {
       eyebrow: 'Measured impact',
