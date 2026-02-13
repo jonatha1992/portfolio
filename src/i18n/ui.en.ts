@@ -12,6 +12,27 @@ export const uiEn: UiCopy = {
     { id: 'articulos', label: 'Articles' },
     { id: 'contacto', label: 'Contact' },
   ],
+  chatAgent: {
+    openLabel: 'Open assistant',
+    closeLabel: 'Close assistant',
+    title: 'AI Assistant',
+    subtitle: 'I can guide visitors through this portfolio.',
+    clearLabel: 'Reset chat',
+    introMessage:
+      'Hi, I am your assistant. I can guide you through the site and answer questions about experience, projects, and contact details.',
+    placeholder: 'Type your question...',
+    sendLabel: 'Send',
+    loadingLabel: 'Thinking...',
+    missingKeyMessage:
+      'Agent key is missing. Add `VITE_AI_API_KEY` to your environment to enable AI responses.',
+    errorMessage:
+      'I could not answer right now. Please try again in a few seconds.',
+    quickPrompts: [
+      'Show me the most relevant projects',
+      'How can I contact you quickly?',
+      'What is your Python and Data Engineering experience?',
+    ],
+  },
   hero: {
     availabilityLabel: 'Availability',
     mailCta: 'Email me',

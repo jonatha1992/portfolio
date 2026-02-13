@@ -12,6 +12,27 @@ export const uiEs: UiCopy = {
     { id: 'articulos', label: 'Articulos' },
     { id: 'contacto', label: 'Contacto' },
   ],
+  chatAgent: {
+    openLabel: 'Abrir asistente',
+    closeLabel: 'Cerrar asistente',
+    title: 'Asistente IA',
+    subtitle: 'Te guio por este portfolio y respondo consultas.',
+    clearLabel: 'Reiniciar chat',
+    introMessage:
+      'Hola, soy tu asistente. Puedo ayudarte a recorrer la pagina, explicar experiencia, proyectos y datos de contacto.',
+    placeholder: 'Escribe tu consulta...',
+    sendLabel: 'Enviar',
+    loadingLabel: 'Pensando...',
+    missingKeyMessage:
+      'Falta configurar la clave del agente. Agrega `VITE_AI_API_KEY` en tu entorno para activar respuestas IA.',
+    errorMessage:
+      'No pude responder en este momento. Intenta de nuevo en unos segundos.',
+    quickPrompts: [
+      'Mostrame los proyectos mas relevantes',
+      'Como puedo contactarte rapido?',
+      'Que experiencia tenes en Python y Data Engineering?',
+    ],
+  },
   hero: {
     availabilityLabel: 'Disponibilidad',
     mailCta: 'Hablemos por correo',

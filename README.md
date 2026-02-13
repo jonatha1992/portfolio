@@ -14,6 +14,25 @@ Aplicacion React + TypeScript enfocada en destacar tu perfil como analista progr
 - `npm run build` - genera el build de produccion en `dist/`.
 - `npm run preview` - sirve el build generado para validarlo localmente.
 
+## Configurar agente IA (chat)
+
+Agrega un archivo `.env` en la raiz del proyecto con:
+
+```bash
+VITE_AI_API_KEY=tu_api_key
+VITE_AI_PROVIDER=gemini
+VITE_AI_MODEL=gemini-2.5-flash
+```
+
+- `VITE_AI_API_KEY` es obligatoria.
+- `VITE_AI_PROVIDER` acepta `gemini` u `openai`. Por defecto usa `gemini`.
+- `VITE_AI_MODEL` y `VITE_AI_API_URL` son opcionales.
+- URL por defecto con `gemini`: `https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent`
+- URL por defecto con `openai`: `https://api.openai.com/v1/chat/completions`
+- El chat usa el contenido de `src/data/content.es.ts` y `src/data/content.en.ts` como contexto para guiar al visitante.
+
+Nota: al usar variables `VITE_*`, la key queda expuesta en el frontend. Para produccion, conviene mover la llamada a un backend/proxy propio.
+
 ## Estructura clave
 
 ```text

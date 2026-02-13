@@ -13,6 +13,20 @@ export type TimelineLabels = Record<TimelineItem['type'], string>
 
 export type UiCopy = {
   navigation: NavCopy[]
+  chatAgent: {
+    openLabel: string
+    closeLabel: string
+    title: string
+    subtitle: string
+    clearLabel: string
+    introMessage: string
+    placeholder: string
+    sendLabel: string
+    loadingLabel: string
+    missingKeyMessage: string
+    errorMessage: string
+    quickPrompts: string[]
+  }
   hero: {
     availabilityLabel: string
     mailCta: string
