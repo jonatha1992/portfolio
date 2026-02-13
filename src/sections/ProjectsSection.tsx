@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { CommandLineIcon } from '@heroicons/react/24/outline'
 import SectionHeader from '../components/common/SectionHeader'
 import Pill from '../components/common/Pill'
+import ImageWithLoader from '../components/common/ImageWithLoader'
 import type { ProfileContent, Project, Locale } from '../data/types'
 import type { UiCopy } from '../i18n'
 import { FiGithub, FiExternalLink, FiFileText, FiX } from 'react-icons/fi'
@@ -84,6 +85,8 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   }
 
   const getVisibleCardTech = (stack: string[]) => stack.slice(0, 4)
+  const cardActionLinkClassName =
+    'inline-flex w-full items-center justify-center gap-2 rounded-lg border border-neutral-300/90 px-2 py-2 text-center text-primary-dark transition hover:border-primary-light hover:text-primary-light dark:border-slate-600 dark:text-primary-light dark:hover:border-primary-light dark:hover:text-white'
 
   const getStatusBadgeClasses = (status: string) => {
     const normalizedStatus = status.trim().toLowerCase()
@@ -128,7 +131,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const renderProject = (project: Project) => (
     <article
       key={project.title}
-      className="group grid h-full w-full min-w-0 cursor-pointer gap-3 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-4 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
+      className="group grid h-full w-full min-w-0 cursor-pointer gap-3 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-4 text-center shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
       onClick={() => openProjectModal(project)}
       onKeyDown={(event) => handleCardKeyDown(event, project)}
       role="button"
@@ -138,33 +141,32 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       {/* Project Image */}
       {project.media && (
         <div className="relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-slate-600">
-          <img
+          <ImageWithLoader
             src={project.media.src}
             alt={project.media.alt}
-            className="h-40 w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            containerClassName="h-40 w-full"
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
+            spinnerDelayMs={0}
+            minimumLoadingMs={480}
+            loaderClassName="bg-slate-950/30 dark:bg-slate-900/65"
           />
-          <div className="absolute left-2 top-2">{renderStatusBadge(project.status)}</div>
+          <div className="absolute left-1/2 top-2 -translate-x-1/2">{renderStatusBadge(project.status)}</div>
         </div>
       )}
-      {!project.media && project.status && <div>{renderStatusBadge(project.status)}</div>}
+      {!project.media && project.status && <div className="flex justify-center">{renderStatusBadge(project.status)}</div>}
 
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0 flex-1">
-          <h3 className="break-words font-display text-lg font-semibold leading-tight text-slate-900 dark:text-white sm:text-xl">
-            {project.title}
-          </h3>
-          <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">{project.role}</p>
-        </div>
-        <span className="shrink-0">
-          <Pill label={project.period} variant="primary" />
-        </span>
+      <div className="min-w-0">
+        <h3 className="break-words font-display text-lg font-semibold leading-tight text-slate-900 dark:text-white sm:text-xl">
+          {project.title}
+        </h3>
+        <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">{project.role}</p>
       </div>
       <p className="text-sm text-slate-600 dark:text-slate-300">{getSummaryExcerpt(project.summary)}</p>
       {project.highlights.length > 0 && (
         <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
           {project.highlights.map((highlight) => (
-            <li key={highlight} className="flex gap-2">
+            <li key={highlight} className="flex justify-center gap-2 text-left">
               <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
               <span>{highlight}</span>
             </li>
@@ -172,7 +174,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
         </ul>
       )}
       {project.stack.length > 0 && (
-        <div className="flex flex-wrap gap-1.5" aria-label="Project technologies">
+        <div className="flex flex-wrap justify-center gap-1.5" aria-label="Project technologies">
           {getVisibleCardTech(project.stack).map((tech, index) => (
             <span
               key={`${project.title}-${tech}-${index}`}
@@ -192,13 +194,13 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
         </div>
       )}
       <div className="flex flex-col gap-2">
-        <div className="min-w-0 flex flex-wrap gap-2 text-xs font-semibold">
+        <div className="min-w-0 grid gap-2 text-xs font-semibold [grid-template-columns:repeat(auto-fit,minmax(120px,1fr))]">
           {project.codeUrl && (
             <a
               href={project.codeUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 whitespace-nowrap text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
+              className={cardActionLinkClassName}
               onClick={(event) => event.stopPropagation()}
             >
               <FiGithub className="h-4 w-4" />
@@ -210,7 +212,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 whitespace-nowrap text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
+              className={cardActionLinkClassName}
               onClick={(event) => event.stopPropagation()}
             >
               <FiExternalLink className="h-4 w-4" />
@@ -222,7 +224,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
               href={project.readmeUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 whitespace-nowrap text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
+              className={cardActionLinkClassName}
               onClick={(event) => event.stopPropagation()}
             >
               <FiFileText className="h-4 w-4" />
@@ -278,7 +280,6 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
             <div className="mb-4 flex items-start justify-between gap-3">
               <div className="space-y-2">
                 <div className="flex flex-wrap gap-2">
-                  <Pill label={selectedProject.period} variant="primary" />
                   {selectedProject.status && <Pill label={`${copy.statusLabel}: ${selectedProject.status}`} />}
                 </div>
                 <h3 id="project-modal-title" className="font-display text-2xl font-semibold text-slate-900 dark:text-white">
@@ -297,11 +298,15 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
             </div>
             {selectedProject.media && (
               <div className="overflow-hidden rounded-2xl border border-neutral-200 dark:border-slate-600">
-                <img
+                <ImageWithLoader
                   src={selectedProject.media.src}
                   alt={selectedProject.media.alt}
-                  className="h-56 w-full object-cover sm:h-64"
+                  containerClassName="h-56 w-full sm:h-64"
+                  className="h-full w-full object-cover"
                   loading="lazy"
+                  spinnerDelayMs={0}
+                  minimumLoadingMs={480}
+                  loaderClassName="bg-slate-950/30 dark:bg-slate-900/65"
                 />
               </div>
             )}

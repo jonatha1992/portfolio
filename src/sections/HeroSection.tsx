@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { EnvelopeIcon, MapPinIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { SiLinkedin, SiGithub, SiWhatsapp } from 'react-icons/si'
 import Pill from '../components/common/Pill'
+import ImageWithLoader from '../components/common/ImageWithLoader'
 import type { ProfileContent } from '../data/types'
 import type { UiCopy } from '../i18n'
 
@@ -13,7 +13,6 @@ type HeroSectionProps = {
 }
 
 const HeroSection = ({ personal, contact, socials, copy }: HeroSectionProps) => {
-  const [showFallback, setShowFallback] = useState(!personal.photo)
   const roles = personal.roles?.length
     ? personal.roles
     : personal.headline.split(' · ').map((role) => role.trim())
@@ -107,25 +106,22 @@ const HeroSection = ({ personal, contact, socials, copy }: HeroSectionProps) => 
         </div>
         <div className="relative mx-auto h-52 w-52 overflow-hidden rounded-3xl border border-primary/30 shadow-2xl shadow-primary/20 dark:border-primary/50 md:h-64 md:w-64">
           <div className="absolute inset-0 bg-gradient-to-br from-primary-light/30 via-transparent to-primary/20" />
-          {personal.photo && !showFallback && (
-            <img
-              src={personal.photo}
-              alt={`Retrato de ${personal.name}`}
-              className="h-full w-full object-cover object-center"
-              loading="lazy"
-              onError={() => setShowFallback(true)}
-              onLoad={() => setShowFallback(false)}
-            />
-          )}
-          {(!personal.photo || showFallback) && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900/80 text-center text-sm text-white backdrop-blur-sm">
-              <span className="font-display text-xl font-semibold">{personal.name}</span>
-              <span className="mt-1 text-xs font-medium text-primary-light">{personal.headline}</span>
-              <span className="mt-3 text-xs text-slate-200">
-                Anade tu fotografia en public/assets/profile
-              </span>
-            </div>
-          )}
+          <ImageWithLoader
+            src={personal.photo}
+            alt={`Retrato de ${personal.name}`}
+            className="h-full w-full object-cover object-center"
+            containerClassName="h-full w-full"
+            loading="lazy"
+            fallback={
+              <div className="flex h-full flex-col items-center justify-center bg-slate-900/80 text-center text-sm text-white backdrop-blur-sm">
+                <span className="font-display text-xl font-semibold">{personal.name}</span>
+                <span className="mt-1 text-xs font-medium text-primary-light">{personal.headline}</span>
+                <span className="mt-3 text-xs text-slate-200">
+                  Anade tu fotografia en public/assets/profile
+                </span>
+              </div>
+            }
+          />
         </div>
       </div>
     </section>
