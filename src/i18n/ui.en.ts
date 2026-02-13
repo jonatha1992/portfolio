@@ -37,7 +37,6 @@ export const uiEn: UiCopy = {
       codeCta: 'View code',
       liveCta: 'View demo',
       readmeCta: 'View README',
-      viewMoreCta: 'View details',
       closeModalLabel: 'Close project details',
       statusLabel: 'Status',
       loadingLabel: 'Loading projects...',

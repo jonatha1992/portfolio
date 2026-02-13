@@ -5,7 +5,7 @@ export const profileContentEn: ProfileContent = {
     name: 'Jonathan Correa',
     headline: 'Software Analyst',
     roles: ['Data Engineer', 'Senior Python Developer'],
-    availability: 'Open to freelance work and international collaborations',
+    availability: 'Open to new job opportunities',
     summary:
       'Senior Python Developer and Data Engineer focused on automating critical processes, building resilient data pipelines, and shipping end-to-end digital products. Since 2015 I have served as part of the Airport Security Police IT personnel, leading initiatives with Python, Django, Flask, and collaborative notebooks to deliver secure, measurable solutions.',
     location: 'Buenos Aires, Argentina',

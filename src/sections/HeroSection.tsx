@@ -62,10 +62,10 @@ const HeroSection = ({ personal, contact, socials, copy }: HeroSectionProps) => 
               <span>{personal.availability}</span>
             </div>
           </div>
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-2 gap-3">
             <a
               href={`mailto:${contact.email}`}
-              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:bg-primary-light"
+              className="col-span-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-primary/30 transition hover:bg-primary-light"
             >
               <EnvelopeIcon className="h-4 w-4" />
               {copy.mailCta}
@@ -75,7 +75,7 @@ const HeroSection = ({ personal, contact, socials, copy }: HeroSectionProps) => 
                 href={socials.linkedin}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-200"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-200"
               >
                 <SiLinkedin className="h-4 w-4" />
                 {copy.linkedinCta}
@@ -86,7 +86,7 @@ const HeroSection = ({ personal, contact, socials, copy }: HeroSectionProps) => 
                 href={socials.github}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-200"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-200"
               >
                 <SiGithub className="h-4 w-4" />
                 {copy.githubCta}
@@ -97,7 +97,7 @@ const HeroSection = ({ personal, contact, socials, copy }: HeroSectionProps) => 
                 href={socials.cv}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-200"
+                className="col-span-2 inline-flex w-full items-center justify-center gap-2 rounded-full border border-neutral-300 px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-200"
               >
                 <ArrowDownTrayIcon className="h-4 w-4" />
                 {copy.cvCta}

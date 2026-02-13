@@ -28,7 +28,6 @@ export type UiCopy = {
       codeCta: string
       liveCta: string
       readmeCta: string
-      viewMoreCta: string
       closeModalLabel: string
       statusLabel: string
       loadingLabel: string

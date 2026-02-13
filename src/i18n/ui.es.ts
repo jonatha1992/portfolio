@@ -37,7 +37,6 @@ export const uiEs: UiCopy = {
       codeCta: 'Ver codigo',
       liveCta: 'Ver demo',
       readmeCta: 'Ver README',
-      viewMoreCta: 'Ver detalles',
       closeModalLabel: 'Cerrar detalle del proyecto',
       statusLabel: 'Estado',
       loadingLabel: 'Cargando proyectos...',

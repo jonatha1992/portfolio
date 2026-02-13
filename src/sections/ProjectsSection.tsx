@@ -128,12 +128,12 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const renderProject = (project: Project) => (
     <article
       key={project.title}
-      className="group grid h-full cursor-pointer gap-3 rounded-2xl border border-neutral-300 bg-white p-4 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
+      className="group grid h-full w-full min-w-0 cursor-pointer gap-3 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-4 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
       onClick={() => openProjectModal(project)}
       onKeyDown={(event) => handleCardKeyDown(event, project)}
       role="button"
       tabIndex={0}
-      aria-label={`${copy.viewMoreCta}: ${project.title}`}
+      aria-label={project.title}
     >
       {/* Project Image */}
       {project.media && (
@@ -149,12 +149,16 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       )}
       {!project.media && project.status && <div>{renderStatusBadge(project.status)}</div>}
 
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-white">{project.title}</h3>
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0 flex-1">
+          <h3 className="break-words font-display text-lg font-semibold leading-tight text-slate-900 dark:text-white sm:text-xl">
+            {project.title}
+          </h3>
           <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">{project.role}</p>
         </div>
-        <Pill label={project.period} variant="primary" />
+        <span className="shrink-0">
+          <Pill label={project.period} variant="primary" />
+        </span>
       </div>
       <p className="text-sm text-slate-600 dark:text-slate-300">{getSummaryExcerpt(project.summary)}</p>
       {project.highlights.length > 0 && (
@@ -187,14 +191,14 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
           )}
         </div>
       )}
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-3 text-xs font-semibold">
+      <div className="flex flex-col gap-2">
+        <div className="min-w-0 flex flex-wrap gap-2 text-xs font-semibold">
           {project.codeUrl && (
             <a
               href={project.codeUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
+              className="inline-flex items-center gap-2 whitespace-nowrap text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
               onClick={(event) => event.stopPropagation()}
             >
               <FiGithub className="h-4 w-4" />
@@ -206,7 +210,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
+              className="inline-flex items-center gap-2 whitespace-nowrap text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
               onClick={(event) => event.stopPropagation()}
             >
               <FiExternalLink className="h-4 w-4" />
@@ -218,7 +222,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
               href={project.readmeUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
+              className="inline-flex items-center gap-2 whitespace-nowrap text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
               onClick={(event) => event.stopPropagation()}
             >
               <FiFileText className="h-4 w-4" />
@@ -226,15 +230,12 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
             </a>
           )}
         </div>
-        <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-primary-light/50 px-3 py-1.5 text-xs font-semibold text-primary-dark dark:border-primary/50 dark:text-primary-light">
-          {copy.viewMoreCta}
-        </span>
       </div>
     </article>
   )
 
   return (
-    <section id="proyectos" className="space-y-4">
+    <section id="proyectos" className="w-full space-y-4">
       <SectionHeader
         eyebrow={copy.eyebrow}
         title={copy.title}
@@ -249,7 +250,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
           </div>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{displayProjects.map(renderProject)}</div>
+        <div className="grid w-full gap-4 md:grid-cols-2 lg:grid-cols-3">{displayProjects.map(renderProject)}</div>
       )}
       {!externalInfo.enabled && (
         <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-100/80 p-3 text-sm text-slate-700 dark:border-slate-600 dark:bg-surface/70 dark:text-slate-200">
@@ -263,16 +264,17 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       )}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 p-4 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-modal-title"
           onClick={closeProjectModal}
         >
-          <article
-            className="max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-3xl border border-neutral-200 bg-white p-5 shadow-2xl dark:border-slate-600 dark:bg-surface sm:p-6"
-            onClick={(event) => event.stopPropagation()}
-          >
+          <div className="mx-auto flex min-h-full w-full items-start justify-center py-4 sm:items-center">
+            <article
+              className="w-full max-w-4xl overflow-y-auto rounded-3xl border border-neutral-200 bg-white p-5 shadow-2xl dark:border-slate-600 dark:bg-surface sm:p-6"
+              onClick={(event) => event.stopPropagation()}
+            >
             <div className="mb-4 flex items-start justify-between gap-3">
               <div className="space-y-2">
                 <div className="flex flex-wrap gap-2">
@@ -358,7 +360,8 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                 </a>
               )}
             </div>
-          </article>
+            </article>
+          </div>
         </div>
       )}
     </section>
