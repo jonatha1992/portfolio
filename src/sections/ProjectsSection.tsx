@@ -7,6 +7,8 @@ import ImageWithLoader from '../components/common/ImageWithLoader'
 import type { ProfileContent, Project, Locale } from '../data/types'
 import type { UiCopy } from '../i18n'
 import { FiGithub, FiExternalLink, FiFileText, FiX } from 'react-icons/fi'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { getTechIcon } from '../icons/techIcons'
 import { getPortfolioProjectsFromFirebase } from '../services/firebase'
 
@@ -17,10 +19,89 @@ type ProjectsSectionProps = {
   locale: Locale
 }
 
+function looksLikeHtmlDocument(content: string): boolean {
+  return /<(?:!doctype|html|head|body)\b/i.test(content)
+}
+
+function toRawGitHubUrl(url: string): string {
+  try {
+    const parsedUrl = new URL(url)
+
+    if (parsedUrl.hostname !== 'github.com') {
+      return url
+    }
+
+    const segments = parsedUrl.pathname.split('/').filter(Boolean)
+
+    if (segments.length >= 5 && segments[2] === 'blob') {
+      const [owner, repo, , branch, ...filePath] = segments
+
+      if (!owner || !repo || !branch || !filePath.length) {
+        return url
+      }
+
+      return `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${filePath.join('/')}`
+    }
+  } catch {
+    return url
+  }
+
+  return url
+}
+
+function getReadmeFetchCandidates(url: string): string[] {
+  const trimmedUrl = url.trim()
+  const candidates = new Set<string>()
+
+  if (!trimmedUrl) {
+    return []
+  }
+
+  candidates.add(toRawGitHubUrl(trimmedUrl))
+  candidates.add(trimmedUrl)
+
+  try {
+    const parsedUrl = new URL(trimmedUrl)
+
+    if (parsedUrl.hostname === 'github.com') {
+      const segments = parsedUrl.pathname.split('/').filter(Boolean)
+
+      if (segments.length >= 2 && segments.length < 5) {
+        const owner = segments[0]
+        const repo = segments[1]
+
+        candidates.add(`https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`)
+        candidates.add(`https://raw.githubusercontent.com/${owner}/${repo}/master/README.md`)
+      }
+    }
+  } catch {
+    return Array.from(candidates)
+  }
+
+  return Array.from(candidates)
+}
+
+function resolveMarkdownResourceUrl(rawUrl: string | undefined, baseUrl: string): string | undefined {
+  if (!rawUrl) {
+    return undefined
+  }
+
+  try {
+    return new URL(rawUrl, baseUrl).toString()
+  } catch {
+    return rawUrl
+  }
+}
+
 const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSectionProps) => {
   const [firebaseProjects, setFirebaseProjects] = useState<Project[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [readmeProject, setReadmeProject] = useState<Project | null>(null)
+  const [readmeContent, setReadmeContent] = useState('')
+  const [readmeSourceUrl, setReadmeSourceUrl] = useState('')
+  const [isReadmeLoading, setIsReadmeLoading] = useState(false)
+  const [readmeError, setReadmeError] = useState<string | null>(null)
 
   useEffect(() => {
     // Only fetch from Firebase if enabled
@@ -40,12 +121,21 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   }, [externalInfo.enabled, locale])
 
   useEffect(() => {
-    if (!selectedProject) {
+    if (!selectedProject && !readmeProject) {
       return
     }
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        if (readmeProject) {
+          setReadmeProject(null)
+          setReadmeContent('')
+          setReadmeSourceUrl('')
+          setReadmeError(null)
+          setIsReadmeLoading(false)
+          return
+        }
+
         setSelectedProject(null)
       }
     }
@@ -58,7 +148,85 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       window.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = originalOverflow
     }
-  }, [selectedProject])
+  }, [selectedProject, readmeProject])
+
+  useEffect(() => {
+    if (!readmeProject?.readmeUrl) {
+      return
+    }
+
+    const abortController = new AbortController()
+    const fetchReadme = async () => {
+      const candidateUrls = getReadmeFetchCandidates(readmeProject.readmeUrl ?? '')
+
+      if (!candidateUrls.length) {
+        setReadmeError(locale === 'es' ? 'No se encontro una URL valida para el README.' : 'No valid README URL was found.')
+        setReadmeContent('')
+        setIsReadmeLoading(false)
+        return
+      }
+
+      setIsReadmeLoading(true)
+      setReadmeError(null)
+      setReadmeContent('')
+
+      let lastError: string | null = null
+
+      for (const candidateUrl of candidateUrls) {
+        try {
+          const response = await fetch(candidateUrl, {
+            signal: abortController.signal,
+            headers: {
+              Accept: 'text/markdown,text/plain;q=0.9,*/*;q=0.5',
+            },
+          })
+
+          if (!response.ok) {
+            lastError = `HTTP ${response.status}`
+            continue
+          }
+
+          const markdown = await response.text()
+
+          if (!markdown.trim()) {
+            lastError = locale === 'es' ? 'El README esta vacio.' : 'The README is empty.'
+            continue
+          }
+
+          if (looksLikeHtmlDocument(markdown)) {
+            lastError = locale === 'es' ? 'La URL devolvio HTML en vez de Markdown.' : 'The URL returned HTML instead of Markdown.'
+            continue
+          }
+
+          setReadmeSourceUrl(candidateUrl)
+          setReadmeContent(markdown)
+          setReadmeError(null)
+          setIsReadmeLoading(false)
+          return
+        } catch (error) {
+          if (error instanceof DOMException && error.name === 'AbortError') {
+            return
+          }
+
+          lastError = error instanceof Error ? error.message : null
+        }
+      }
+
+      setReadmeContent('')
+      setReadmeError(
+        locale === 'es'
+          ? `No se pudo cargar el README en este momento.${lastError ? ` (${lastError})` : ''}`
+          : `Could not load the README right now.${lastError ? ` (${lastError})` : ''}`,
+      )
+      setIsReadmeLoading(false)
+    }
+
+    void fetchReadme()
+
+    return () => {
+      abortController.abort()
+    }
+  }, [locale, readmeProject])
 
   // Use Firebase projects if enabled and loaded, otherwise use static projects
   const displayProjects = externalInfo.enabled && firebaseProjects.length > 0 ? firebaseProjects : projects
@@ -82,6 +250,14 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
 
   const closeProjectModal = () => {
     setSelectedProject(null)
+  }
+
+  const closeReadmeModal = () => {
+    setReadmeProject(null)
+    setReadmeContent('')
+    setReadmeSourceUrl('')
+    setReadmeError(null)
+    setIsReadmeLoading(false)
   }
 
   const getVisibleCardTech = (stack: string[]) => stack.slice(0, 4)
@@ -119,6 +295,18 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
 
   const openProjectModal = (project: Project) => {
     setSelectedProject(project)
+  }
+
+  const openReadmeModal = (project: Project) => {
+    if (!project.readmeUrl) {
+      return
+    }
+
+    setReadmeContent('')
+    setReadmeSourceUrl('')
+    setReadmeError(null)
+    setIsReadmeLoading(true)
+    setReadmeProject(project)
   }
 
   const handleCardKeyDown = (event: React.KeyboardEvent<HTMLElement>, project: Project) => {
@@ -220,16 +408,17 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
             </a>
           )}
           {project.readmeUrl && (
-            <a
-              href={project.readmeUrl}
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
               className={cardActionLinkClassName}
-              onClick={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation()
+                openReadmeModal(project)
+              }}
             >
               <FiFileText className="h-4 w-4" />
               {copy.readmeCta}
-            </a>
+            </button>
           )}
         </div>
       </div>
@@ -354,17 +543,128 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                 </a>
               )}
               {selectedProject.readmeUrl && (
-                <a
-                  href={selectedProject.readmeUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                <button
+                  type="button"
+                  onClick={() => openReadmeModal(selectedProject)}
                   className="inline-flex items-center gap-2 text-primary-dark transition hover:text-primary-light dark:text-primary-light dark:hover:text-white"
                 >
                   <FiFileText className="h-4 w-4" />
                   {copy.readmeCta}
-                </a>
+                </button>
               )}
             </div>
+            </article>
+          </div>
+        </div>
+      )}
+      {readmeProject && (
+        <div
+          className="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/80 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="readme-modal-title"
+          onClick={closeReadmeModal}
+        >
+          <div className="mx-auto flex min-h-full w-full items-start justify-center py-4 sm:items-center">
+            <article
+              className="w-full max-w-5xl overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-2xl dark:border-slate-600 dark:bg-surface"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <header className="flex items-center justify-between gap-3 border-b border-neutral-200 px-4 py-3 dark:border-slate-700 sm:px-5">
+                <div className="min-w-0">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">{copy.readmeCta}</p>
+                  <h3
+                    id="readme-modal-title"
+                    className="truncate font-display text-lg font-semibold text-slate-900 dark:text-white"
+                    title={readmeProject.title}
+                  >
+                    {readmeProject.title}
+                  </h3>
+                </div>
+                <div className="flex items-center gap-2">
+                  {readmeProject.readmeUrl && (
+                    <a
+                      href={readmeProject.readmeUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hidden text-xs font-semibold text-primary-dark underline decoration-primary/40 underline-offset-4 transition hover:text-primary-light dark:text-primary-light dark:hover:text-white sm:inline"
+                    >
+                      {locale === 'es' ? 'Abrir original' : 'Open original'}
+                    </a>
+                  )}
+                  <button
+                    type="button"
+                    onClick={closeReadmeModal}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-neutral-300 text-slate-600 transition hover:border-primary-light hover:text-primary-light dark:border-slate-600 dark:text-slate-200 dark:hover:text-white"
+                    aria-label={copy.closeModalLabel}
+                  >
+                    <FiX className="h-5 w-5" />
+                  </button>
+                </div>
+              </header>
+              <div className="max-h-[75vh] overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
+                {isReadmeLoading ? (
+                  <div className="flex items-center justify-center py-12">
+                    <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+                    <span className="ml-3 text-sm text-slate-600 dark:text-slate-300">
+                      {locale === 'es' ? 'Cargando README...' : 'Loading README...'}
+                    </span>
+                  </div>
+                ) : readmeError ? (
+                  <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-700 dark:border-rose-400/30 dark:bg-rose-500/10 dark:text-rose-200">
+                    <p>{readmeError}</p>
+                    {readmeProject.readmeUrl && (
+                      <a
+                        href={readmeProject.readmeUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-3 inline-flex items-center gap-2 font-semibold underline underline-offset-4"
+                      >
+                        <FiExternalLink className="h-4 w-4" />
+                        {locale === 'es' ? 'Abrir README en nueva pestana' : 'Open README in a new tab'}
+                      </a>
+                    )}
+                  </div>
+                ) : (
+                  <div className="prose prose-slate max-w-none break-words prose-headings:font-display prose-a:text-primary-dark prose-a:underline prose-a:decoration-primary/40 prose-a:underline-offset-4 prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:text-slate-100 dark:prose-invert dark:prose-a:text-primary-light">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        a: ({ href, children, ...props }) => {
+                          const resolvedHref = resolveMarkdownResourceUrl(href, readmeSourceUrl)
+                          const isHashLink = resolvedHref?.startsWith('#')
+
+                          if (!resolvedHref) {
+                            return <span>{children}</span>
+                          }
+
+                          return (
+                            <a
+                              {...props}
+                              href={resolvedHref}
+                              target={isHashLink ? undefined : '_blank'}
+                              rel={isHashLink ? undefined : 'noreferrer'}
+                            >
+                              {children}
+                            </a>
+                          )
+                        },
+                        img: ({ src, alt, ...props }) => {
+                          const resolvedSrc = resolveMarkdownResourceUrl(src, readmeSourceUrl)
+
+                          if (!resolvedSrc) {
+                            return null
+                          }
+
+                          return <img {...props} src={resolvedSrc} alt={alt ?? ''} loading="lazy" className="rounded-xl" />
+                        },
+                      }}
+                    >
+                      {readmeContent}
+                    </ReactMarkdown>
+                  </div>
+                )}
+              </div>
             </article>
           </div>
         </div>
