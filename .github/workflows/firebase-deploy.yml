@@ -11,10 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VITE_AI_PROVIDER: ${{ secrets.VITE_AI_PROVIDER }}
-      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-      OPEN_ROUTER_API_KEY: ${{ secrets.OPEN_ROUTER_API_KEY }}
-      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY || secrets.GEMINI_API_KEY }}
       VITE_OPEN_ROUTER_API_KEY: ${{ secrets.VITE_OPEN_ROUTER_API_KEY || secrets.OPEN_ROUTER_API_KEY }}
       VITE_GROQ_API_KEY: ${{ secrets.VITE_GROQ_API_KEY || secrets.GROQ_API_KEY }}
