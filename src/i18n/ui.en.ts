@@ -24,7 +24,7 @@ export const uiEn: UiCopy = {
     sendLabel: 'Send',
     loadingLabel: 'Thinking...',
     missingKeyMessage:
-      'Agent key is missing. Add `VITE_AI_API_KEY` to your environment to enable AI responses.',
+      'Agent key is missing. Add `GEMINI_API_KEY`, `OPEN_ROUTER_API_KEY`, or `GROQ_API_KEY` to your environment to enable AI responses.',
     errorMessage:
       'I could not answer right now. Please try again in a few seconds.',
     quickPrompts: [

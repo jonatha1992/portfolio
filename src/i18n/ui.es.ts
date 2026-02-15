@@ -24,7 +24,7 @@ export const uiEs: UiCopy = {
     sendLabel: 'Enviar',
     loadingLabel: 'Pensando...',
     missingKeyMessage:
-      'Falta configurar la clave del agente. Agrega `VITE_AI_API_KEY` en tu entorno para activar respuestas IA.',
+      'Falta configurar el agente. Agrega `GEMINI_API_KEY`, `OPEN_ROUTER_API_KEY` o `GROQ_API_KEY` en tu entorno para activar respuestas IA.',
     errorMessage:
       'No pude responder en este momento. Intenta de nuevo en unos segundos.',
     quickPrompts: [

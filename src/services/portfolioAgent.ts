@@ -12,7 +12,7 @@ type PortfolioAgentRequest = {
   history: AgentChatMessage[]
 }
 
-type AiProvider = 'openai' | 'gemini'
+type AiProvider = 'openai' | 'gemini' | 'openrouter' | 'groq'
 
 type OpenAIMessage = {
   role: 'system' | 'user' | 'assistant'
@@ -43,12 +43,31 @@ type GeminiChatResponse = {
   }
 }
 
+type ProviderRequestConfig = {
+  provider: AiProvider
+  apiKey: string
+  model: string
+  apiUrl: string
+}
+
+type ProviderRequestPayload = {
+  locale: Locale
+  content: ProfileContent
+  userMessage: string
+  history: AgentChatMessage[]
+}
+
 const DEFAULT_PROVIDER: AiProvider = 'gemini'
 const DEFAULT_OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions'
 const DEFAULT_OPENAI_MODEL = 'gpt-4o-mini'
 const DEFAULT_GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta'
 const DEFAULT_GEMINI_MODEL = 'gemini-2.5-flash'
+const DEFAULT_OPEN_ROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions'
+const DEFAULT_OPEN_ROUTER_MODEL = 'openai/gpt-4o-mini'
+const DEFAULT_GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions'
+const DEFAULT_GROQ_MODEL = 'llama-3.1-8b-instant'
 const MAX_HISTORY_MESSAGES = 10
+const PROVIDER_FALLBACK_ORDER: AiProvider[] = ['gemini', 'openrouter', 'groq', 'openai']
 
 function getEnvValue(name: string): string | undefined {
   const value = (import.meta.env as Record<string, string | undefined>)[name]
@@ -61,23 +80,82 @@ function getEnvValue(name: string): string | undefined {
   return trimmed.length ? trimmed : undefined
 }
 
-export function isPortfolioAgentConfigured(): boolean {
-  return Boolean(getEnvValue('VITE_AI_API_KEY'))
-}
-
 function getProvider(): AiProvider {
   const provider = (getEnvValue('VITE_AI_PROVIDER') ?? DEFAULT_PROVIDER).toLowerCase()
-  return provider === 'openai' ? 'openai' : 'gemini'
+
+  if (provider === 'openai' || provider === 'gemini' || provider === 'openrouter' || provider === 'groq') {
+    return provider
+  }
+
+  return DEFAULT_PROVIDER
+}
+
+function getProviderOrder(preferredProvider: AiProvider): AiProvider[] {
+  const order: AiProvider[] = [preferredProvider]
+
+  for (const provider of PROVIDER_FALLBACK_ORDER) {
+    if (!order.includes(provider)) {
+      order.push(provider)
+    }
+  }
+
+  return order
+}
+
+function getProviderApiKey(provider: AiProvider, preferredProvider: AiProvider): string | undefined {
+  const legacyApiKey = getEnvValue('VITE_AI_API_KEY')
+
+  switch (provider) {
+    case 'gemini':
+      return (
+        getEnvValue('GEMINI_API_KEY') ??
+        getEnvValue('VITE_GEMINI_API_KEY') ??
+        (preferredProvider === 'gemini' ? legacyApiKey : undefined)
+      )
+    case 'openrouter':
+      return (
+        getEnvValue('OPEN_ROUTER_API_KEY') ??
+        getEnvValue('VITE_OPEN_ROUTER_API_KEY') ??
+        (preferredProvider === 'openrouter' ? legacyApiKey : undefined)
+      )
+    case 'groq':
+      return (
+        getEnvValue('GROQ_API_KEY') ??
+        getEnvValue('VITE_GROQ_API_KEY') ??
+        (preferredProvider === 'groq' ? legacyApiKey : undefined)
+      )
+    case 'openai':
+      return (
+        getEnvValue('OPENAI_API_KEY') ??
+        getEnvValue('VITE_OPENAI_API_KEY') ??
+        (preferredProvider === 'openai' ? legacyApiKey : undefined)
+      )
+    default:
+      return undefined
+  }
+}
+
+export function isPortfolioAgentConfigured(): boolean {
+  const preferredProvider = getProvider()
+
+  return getProviderOrder(preferredProvider).some((provider) => Boolean(getProviderApiKey(provider, preferredProvider)))
 }
 
 function getModel(provider: AiProvider): string {
-  const configuredModel = getEnvValue('VITE_AI_MODEL')
+  const sharedModel = getEnvValue('VITE_AI_MODEL')
 
-  if (configuredModel) {
-    return configuredModel
+  switch (provider) {
+    case 'gemini':
+      return getEnvValue('VITE_GEMINI_MODEL') ?? sharedModel ?? DEFAULT_GEMINI_MODEL
+    case 'openrouter':
+      return getEnvValue('VITE_OPEN_ROUTER_MODEL') ?? sharedModel ?? DEFAULT_OPEN_ROUTER_MODEL
+    case 'groq':
+      return getEnvValue('VITE_GROQ_MODEL') ?? sharedModel ?? DEFAULT_GROQ_MODEL
+    case 'openai':
+      return getEnvValue('VITE_OPENAI_MODEL') ?? sharedModel ?? DEFAULT_OPENAI_MODEL
+    default:
+      return sharedModel ?? DEFAULT_GEMINI_MODEL
   }
-
-  return provider === 'gemini' ? DEFAULT_GEMINI_MODEL : DEFAULT_OPENAI_MODEL
 }
 
 function buildPortfolioSnapshot(content: ProfileContent): string {
@@ -109,8 +187,7 @@ function buildPortfolioSnapshot(content: ProfileContent): string {
 }
 
 function buildSystemPrompt(locale: Locale, content: ProfileContent): string {
-  const languageRule =
-    locale === 'es' ? 'Responde siempre en espanol neutro.' : 'Always answer in clear English.'
+  const languageRule = locale === 'es' ? 'Responde siempre en espanol neutro.' : 'Always answer in clear English.'
 
   return [
     'You are the AI assistant for Jonathan Correa portfolio website.',
@@ -159,8 +236,7 @@ function extractGeminiMessage(data: GeminiChatResponse): string | null {
   return text.length ? text : null
 }
 
-function buildGeminiApiUrl(model: string, apiKey: string): string {
-  const configuredUrl = getEnvValue('VITE_AI_API_URL')
+function buildGeminiApiUrl(model: string, apiKey: string, configuredUrl?: string): string {
   const baseUrl = configuredUrl ?? `${DEFAULT_GEMINI_API_URL}/models/${model}:generateContent`
   const url = new URL(baseUrl)
 
@@ -171,15 +247,73 @@ function buildGeminiApiUrl(model: string, apiKey: string): string {
   return url.toString()
 }
 
-async function requestWithOpenAI(
+function getOpenAICompatibleApiUrl(provider: AiProvider): string {
+  if (provider === 'openrouter') {
+    return getEnvValue('VITE_OPEN_ROUTER_API_URL') ?? getEnvValue('VITE_AI_API_URL') ?? DEFAULT_OPEN_ROUTER_API_URL
+  }
+
+  if (provider === 'groq') {
+    return getEnvValue('VITE_GROQ_API_URL') ?? getEnvValue('VITE_AI_API_URL') ?? DEFAULT_GROQ_API_URL
+  }
+
+  return getEnvValue('VITE_OPENAI_API_URL') ?? getEnvValue('VITE_AI_API_URL') ?? DEFAULT_OPENAI_API_URL
+}
+
+function getProviderRequestConfigs(preferredProvider: AiProvider): ProviderRequestConfig[] {
+  return getProviderOrder(preferredProvider)
+    .map((provider) => {
+      const apiKey = getProviderApiKey(provider, preferredProvider)
+
+      if (!apiKey) {
+        return null
+      }
+
+      const model = getModel(provider)
+      const apiUrl =
+        provider === 'gemini'
+          ? buildGeminiApiUrl(
+              model,
+              apiKey,
+              getEnvValue('VITE_GEMINI_API_URL') ?? getEnvValue('VITE_AI_API_URL'),
+            )
+          : getOpenAICompatibleApiUrl(provider)
+
+      return {
+        provider,
+        apiKey,
+        model,
+        apiUrl,
+      }
+    })
+    .filter((config): config is ProviderRequestConfig => Boolean(config))
+}
+
+function getOpenRouterHeaders(): Record<string, string> {
+  const headers: Record<string, string> = {}
+  const referer = getEnvValue('VITE_OPEN_ROUTER_SITE_URL')
+  const title = getEnvValue('VITE_OPEN_ROUTER_APP_NAME')
+
+  if (referer) {
+    headers['HTTP-Referer'] = referer
+  }
+
+  if (title) {
+    headers['X-Title'] = title
+  }
+
+  return headers
+}
+
+async function requestWithOpenAICompatible(
   apiKey: string,
+  apiUrl: string,
   model: string,
   locale: Locale,
   content: ProfileContent,
   userMessage: string,
   history: AgentChatMessage[],
+  extraHeaders: Record<string, string> = {},
 ): Promise<string> {
-  const apiUrl = getEnvValue('VITE_AI_API_URL') ?? DEFAULT_OPENAI_API_URL
   const messages: OpenAIMessage[] = [
     {
       role: 'system',
@@ -200,6 +334,7 @@ async function requestWithOpenAI(
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
+      ...extraHeaders,
     },
     body: JSON.stringify({
       model,
@@ -225,14 +360,12 @@ async function requestWithOpenAI(
 }
 
 async function requestWithGemini(
-  apiKey: string,
-  model: string,
+  apiUrl: string,
   locale: Locale,
   content: ProfileContent,
   userMessage: string,
   history: AgentChatMessage[],
 ): Promise<string> {
-  const apiUrl = buildGeminiApiUrl(model, apiKey)
   const response = await fetch(apiUrl, {
     method: 'POST',
     headers: {
@@ -274,24 +407,57 @@ async function requestWithGemini(
   return assistantMessage
 }
 
+async function requestWithProvider(config: ProviderRequestConfig, payload: ProviderRequestPayload): Promise<string> {
+  const { locale, content, userMessage, history } = payload
+
+  if (config.provider === 'gemini') {
+    return requestWithGemini(config.apiUrl, locale, content, userMessage, history)
+  }
+
+  const extraHeaders = config.provider === 'openrouter' ? getOpenRouterHeaders() : {}
+
+  return requestWithOpenAICompatible(
+    config.apiKey,
+    config.apiUrl,
+    config.model,
+    locale,
+    content,
+    userMessage,
+    history,
+    extraHeaders,
+  )
+}
+
 export async function askPortfolioAgent({
   locale,
   content,
   userMessage,
   history,
 }: PortfolioAgentRequest): Promise<string> {
-  const apiKey = getEnvValue('VITE_AI_API_KEY')
+  const preferredProvider = getProvider()
+  const providerConfigs = getProviderRequestConfigs(preferredProvider)
 
-  if (!apiKey) {
-    throw new Error('Missing VITE_AI_API_KEY')
+  if (!providerConfigs.length) {
+    throw new Error(
+      'Missing API key configuration. Add GEMINI_API_KEY, OPEN_ROUTER_API_KEY, GROQ_API_KEY, or VITE_AI_API_KEY.',
+    )
   }
 
-  const provider = getProvider()
-  const model = getModel(provider)
+  let lastError: Error | undefined
 
-  if (provider === 'openai') {
-    return requestWithOpenAI(apiKey, model, locale, content, userMessage, history)
+  for (const config of providerConfigs) {
+    try {
+      return await requestWithProvider(config, {
+        locale,
+        content,
+        userMessage,
+        history,
+      })
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error('AI request failed')
+      console.error(`Portfolio assistant provider "${config.provider}" failed:`, lastError.message)
+    }
   }
 
-  return requestWithGemini(apiKey, model, locale, content, userMessage, history)
+  throw lastError ?? new Error('AI request failed')
 }

@@ -19,19 +19,23 @@ Aplicacion React + TypeScript enfocada en destacar tu perfil como analista progr
 Agrega un archivo `.env` en la raiz del proyecto con:
 
 ```bash
-VITE_AI_API_KEY=tu_api_key
+GEMINI_API_KEY=tu_api_key_gemini
+OPEN_ROUTER_API_KEY=tu_api_key_openrouter
+GROQ_API_KEY=tu_api_key_groq
 VITE_AI_PROVIDER=gemini
-VITE_AI_MODEL=gemini-2.5-flash
+# VITE_GEMINI_MODEL=gemini-2.5-flash
+# VITE_OPEN_ROUTER_MODEL=openai/gpt-4o-mini
+# VITE_GROQ_MODEL=llama-3.1-8b-instant
 ```
 
-- `VITE_AI_API_KEY` es obligatoria.
-- `VITE_AI_PROVIDER` acepta `gemini` u `openai`. Por defecto usa `gemini`.
-- `VITE_AI_MODEL` y `VITE_AI_API_URL` son opcionales.
-- URL por defecto con `gemini`: `https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent`
-- URL por defecto con `openai`: `https://api.openai.com/v1/chat/completions`
+- Configura una o varias keys. Si el proveedor principal falla, el chat hace fallback automatico en este orden: `gemini -> openrouter -> groq`.
+- `VITE_AI_PROVIDER` acepta `gemini`, `openrouter`, `groq` u `openai`. Por defecto usa `gemini`.
+- Puedes seguir usando `VITE_AI_API_KEY` (modo legacy) si prefieres una sola key segun `VITE_AI_PROVIDER`.
+- Models opcionales por proveedor: `VITE_GEMINI_MODEL`, `VITE_OPEN_ROUTER_MODEL`, `VITE_GROQ_MODEL`, `VITE_OPENAI_MODEL`.
+- Endpoints opcionales por proveedor: `VITE_GEMINI_API_URL`, `VITE_OPEN_ROUTER_API_URL`, `VITE_GROQ_API_URL`, `VITE_OPENAI_API_URL`.
 - El chat usa el contenido de `src/data/content.es.ts` y `src/data/content.en.ts` como contexto para guiar al visitante.
 
-Nota: al usar variables `VITE_*`, la key queda expuesta en el frontend. Para produccion, conviene mover la llamada a un backend/proxy propio.
+Nota: estas keys se usan desde el frontend (`VITE_*`, `GEMINI_*`, `OPEN_ROUTER_*`, `GROQ_*`), por lo que quedan expuestas en cliente. Para produccion, conviene mover la llamada a un backend/proxy propio.
 
 ## Estructura clave
 
