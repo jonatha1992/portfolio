@@ -1,0 +1,12 @@
+{
+  "source_branch": "main",
+  "target_branch": "test",
+  "test_commands": [
+    "npm run build"
+  ],
+  "require_docs_update": true,
+  "docs_paths": ["docs"],
+  "structural_paths": ["src", "public", ".github/workflows", "package.json", "package-lock.json"],
+  "auto_commit_dev_changes": true,
+  "require_deploy_confirmation": true
+}

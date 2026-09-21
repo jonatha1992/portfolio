@@ -338,6 +338,11 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
             spinnerDelayMs={0}
             minimumLoadingMs={480}
             loaderClassName="bg-slate-950/30 dark:bg-slate-900/65"
+            fallback={
+              <div role="img" aria-label={project.media.alt} className="flex h-full w-full items-center justify-center bg-neutral-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
+                <CommandLineIcon className="h-10 w-10" aria-hidden="true" />
+              </div>
+            }
           />
           <div className="absolute left-1/2 top-2 -translate-x-1/2">{renderStatusBadge(project.status)}</div>
         </div>
@@ -496,6 +501,11 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                   spinnerDelayMs={0}
                   minimumLoadingMs={480}
                   loaderClassName="bg-slate-950/30 dark:bg-slate-900/65"
+                  fallback={
+                    <div role="img" aria-label={selectedProject.media.alt} className="flex h-full w-full items-center justify-center bg-neutral-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
+                      <CommandLineIcon className="h-10 w-10" aria-hidden="true" />
+                    </div>
+                  }
                 />
               </div>
             )}

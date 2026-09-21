@@ -54,6 +54,11 @@ export const profileContentEn: ProfileContent = {
         'Granular access control and audit trail aligned with security policies.',
       ],
       stack: ['React', 'FastAPI', 'PostgreSQL', 'Power BI', 'Docker', 'Tailwind CSS'],
+      media: {
+        type: 'image',
+        src: '/assets/projects/analitica-operacional-psa.svg',
+        alt: 'Operational analytics dashboard with KPI cards, a bar chart and a trend line.',
+      },
     },
     {
       title: 'License Plate Recognition System',
@@ -67,6 +72,11 @@ export const profileContentEn: ProfileContent = {
         'Integration with internal APIs to automate ticket creation and SOC alerts.',
       ],
       stack: ['Python', 'TensorFlow', 'OpenCV', 'Docker', 'Azure DevOps'],
+      media: {
+        type: 'image',
+        src: '/assets/projects/reconocimiento-matriculas.svg',
+        alt: 'Stylized vehicle license plate inside a detection frame with landmark points and a scan line.',
+      },
     },
     {
       title: 'Intelligence Reporting Automation',
@@ -80,6 +90,11 @@ export const profileContentEn: ProfileContent = {
         'Reduced report preparation time from hours to minutes.',
       ],
       stack: ['Python', 'Pandas', 'scikit-learn', 'Power BI', 'SQL Server'],
+      media: {
+        type: 'image',
+        src: '/assets/projects/automatizacion-reportes.svg',
+        alt: 'Data flow feeding an automated process and report sheets with a scatter plot and regression line.',
+      },
     },
   ],
   achievements: [
@@ -203,8 +218,8 @@ export const profileContentEn: ProfileContent = {
   externalSources: {
     projectsFromFirebase: {
       description:
-        'Projects are dynamically loaded from Firebase Cloud Functions with multi-language support.',
-      bucketPath: 'https://us-central1-tecnofuision-it.cloudfunctions.net/getProjects',
+        'Projects are dynamically loaded from Cloud Firestore over REST, with no Cloud Functions dependency.',
+      bucketPath: 'firestore.googleapis.com/v1/projects/tecnofuision-it/databases/(default)/documents/projects',
       enabled: true,
     },
   },

@@ -54,6 +54,11 @@ export const profileContentEs: ProfileContent = {
         'Control de acceso granular y auditoria alineada a normativas de seguridad.',
       ],
       stack: ['React', 'FastAPI', 'PostgreSQL', 'Power BI', 'Docker', 'Tailwind CSS'],
+      media: {
+        type: 'image',
+        src: '/assets/projects/analitica-operacional-psa.svg',
+        alt: 'Panel de analítica operacional con tarjetas de indicadores, gráfico de barras y línea de tendencia.',
+      },
     },
     {
       title: 'Sistema de Reconocimiento de Matriculas',
@@ -67,6 +72,11 @@ export const profileContentEs: ProfileContent = {
         'Integracion con APIs internas para tickets y alertas en el SOC.',
       ],
       stack: ['Python', 'TensorFlow', 'OpenCV', 'Docker', 'Azure DevOps'],
+      media: {
+        type: 'image',
+        src: '/assets/projects/reconocimiento-matriculas.svg',
+        alt: 'Matrícula estilizada de un vehículo con marco de detección, puntos de referencia y línea de escaneo.',
+      },
     },
     {
       title: 'Automatizacion de Reportes de Inteligencia',
@@ -80,6 +90,11 @@ export const profileContentEs: ProfileContent = {
         'Reduccion del tiempo de elaboracion de horas a minutos.',
       ],
       stack: ['Python', 'Pandas', 'scikit-learn', 'Power BI', 'SQL Server'],
+      media: {
+        type: 'image',
+        src: '/assets/projects/automatizacion-reportes.svg',
+        alt: 'Flujo de datos conectado a un proceso automatizado y hojas de reporte con dispersión y recta de regresión.',
+      },
     },
   ],
   achievements: [
@@ -197,8 +212,8 @@ export const profileContentEs: ProfileContent = {
   externalSources: {
     projectsFromFirebase: {
       description:
-        'Los proyectos se cargan dinámicamente desde Firebase Cloud Functions con soporte multi-idioma.',
-      bucketPath: 'https://us-central1-tecnofuision-it.cloudfunctions.net/getProjects',
+        'Los proyectos se cargan dinámicamente desde Cloud Firestore por REST, sin depender de Cloud Functions.',
+      bucketPath: 'firestore.googleapis.com/v1/projects/tecnofuision-it/databases/(default)/documents/projects',
       enabled: true,
     },
   },

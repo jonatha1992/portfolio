@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test
   workflow_dispatch:
 
 jobs:
@@ -47,5 +48,7 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_CORREA_JONATHAN }}'
-          channelId: live
+          # main va a produccion; test va a un canal de preview con URL propia.
+          channelId: ${{ github.ref == 'refs/heads/main' && 'live' || 'test' }}
+          expires: 30d
           projectId: portfolio-correa-jonathan
