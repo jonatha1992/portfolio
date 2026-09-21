@@ -5,4 +5,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://jonathancorrea-2f2de.web.app/sitemap.xml
+Sitemap: https://portfolio-correa-jonathan.web.app/sitemap.xml

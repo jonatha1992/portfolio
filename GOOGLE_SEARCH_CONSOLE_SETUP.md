@@ -29,8 +29,8 @@ firebase deploy
 
 Después del despliegue, verifica que estos archivos sean accesibles:
 
-- https://jonathancorrea-2f2de.web.app/robots.txt
-- https://jonathancorrea-2f2de.web.app/sitemap.xml
+- https://portfolio-correa-jonathan.web.app/robots.txt
+- https://portfolio-correa-jonathan.web.app/sitemap.xml
 
 ### 3. Configurar Google Search Console
 
@@ -43,7 +43,7 @@ Después del despliegue, verifica que estos archivos sean accesibles:
 
 1. Haz clic en **"Agregar propiedad"**
 2. Selecciona **"Prefijo de URL"**
-3. Introduce: `https://jonathancorrea-2f2de.web.app/`
+3. Introduce: `https://portfolio-correa-jonathan.web.app/`
 4. Haz clic en **"Continuar"**
 
 #### C. Verificar la propiedad
@@ -83,7 +83,7 @@ Una vez verificada la propiedad:
 Para acelerar la indexación de tu sitio:
 
 1. En el menú lateral, ve a **"Inspección de URLs"**
-2. Introduce: `https://jonathancorrea-2f2de.web.app/`
+2. Introduce: `https://portfolio-correa-jonathan.web.app/`
 3. Haz clic en **"Solicitar indexación"**
 
 ## 📊 Monitorear el rendimiento
