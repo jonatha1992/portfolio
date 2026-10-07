@@ -25,3 +25,7 @@ dist-ssr
 
 # Local agent skill registry (gentle-ai, machine-specific paths)
 .atl/
+
+# Firebase cache
+.firebase/
+
