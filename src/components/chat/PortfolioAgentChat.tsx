@@ -377,7 +377,7 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
 
       {isOpen && (
         <section className="flex h-[min(74vh,600px)] w-full flex-col overflow-hidden rounded-2xl border border-neutral-300 bg-white shadow-2xl dark:border-slate-700 dark:bg-surface">
-          <header className="flex items-start justify-between gap-3 border-b border-neutral-300 bg-gradient-to-r from-primary/10 via-white to-accent/15 px-3 py-2.5 dark:border-slate-700 dark:from-primary/20 dark:via-surface dark:to-primary/10">
+          <header className="flex items-start justify-between gap-3 border-b border-neutral-300 bg-linear-to-r from-primary/10 via-white to-accent/15 px-3 py-2.5 dark:border-slate-700 dark:from-primary/20 dark:via-surface dark:to-primary/10">
             <div className="min-w-0 space-y-1">
               <p className="flex items-center gap-2 font-display text-sm font-semibold text-slate-900 dark:text-white">
                 <SparklesIcon className="h-4 w-4 text-primary-dark dark:text-primary-light" />
@@ -459,7 +459,7 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
                   value={inputValue}
                   onChange={(event) => setInputValue(event.target.value)}
                   placeholder={copy.placeholder}
-                  className="h-10 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-slate-800 outline-none transition focus:border-primary-light dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                  className="h-10 w-full rounded-xl border border-neutral-300 bg-white px-3 text-sm text-slate-800 outline-hidden transition focus:border-primary-light dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
                 />
                 <button
                   type="submit"

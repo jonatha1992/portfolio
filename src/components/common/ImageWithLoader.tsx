@@ -104,7 +104,7 @@ const ImageWithLoader = ({
           className={`absolute inset-0 z-10 overflow-hidden rounded-[inherit] bg-slate-950/28 transition-opacity duration-300 dark:bg-slate-900/60 ${isLoaded ? 'pointer-events-none opacity-0' : 'opacity-100'} ${loaderClassName}`}
           aria-hidden="true"
         >
-          <span className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/60 via-transparent to-white/20 dark:from-slate-100/5 dark:via-transparent dark:to-slate-100/10" />
+          <span className="absolute inset-0 animate-pulse bg-linear-to-br from-white/60 via-transparent to-white/20 dark:from-slate-100/5 dark:via-transparent dark:to-slate-100/10" />
           {showSpinner && !isLoaded && (
             <span className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-slate-900/45 shadow-lg backdrop-blur-[1px] dark:bg-slate-950/55">
               <LoadingSpinner />

@@ -26,7 +26,7 @@ const iconMap: Record<(typeof linkKeys)[number], ReactElement> = {
 }
 
 const SiteFooter = ({ name, socials, note, linkLabels }: SiteFooterProps) => (
-  <footer className="border-t border-neutral-300 bg-white/80 py-7 backdrop-blur dark:border-slate-700/60 dark:bg-surface/80">
+  <footer className="border-t border-neutral-300 bg-white/80 py-7 backdrop-blur-sm dark:border-slate-700/60 dark:bg-surface/80">
     <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between md:px-6">
       <div>
         <p className="font-display text-base font-semibold text-slate-900 dark:text-white">{name}</p>

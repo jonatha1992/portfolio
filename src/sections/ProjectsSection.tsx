@@ -285,7 +285,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
 
     return (
       <span
-        className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-sm ${getStatusBadgeClasses(status)}`}
+        className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-xs ${getStatusBadgeClasses(status)}`}
         aria-label={`${copy.statusLabel}: ${status}`}
       >
         {status}
@@ -319,7 +319,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const renderProject = (project: Project) => (
     <article
       key={project.title}
-      className="group grid h-full w-full min-w-0 cursor-pointer gap-2.5 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-3.5 text-center shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
+      className="group grid h-full w-full min-w-0 cursor-pointer gap-2.5 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-3.5 text-center shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
       onClick={() => openProjectModal(project)}
       onKeyDown={(event) => handleCardKeyDown(event, project)}
       role="button"
@@ -350,7 +350,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       {!project.media && project.status && <div className="flex justify-center">{renderStatusBadge(project.status)}</div>}
 
       <div className="min-w-0">
-        <h3 className="break-words font-display text-base font-semibold leading-tight text-slate-900 dark:text-white sm:text-lg">
+        <h3 className="wrap-break-word font-display text-base font-semibold leading-tight text-slate-900 dark:text-white sm:text-lg">
           {project.title}
         </h3>
         <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">{project.role}</p>
@@ -373,7 +373,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
               key={`${project.title}-${tech}-${index}`}
               title={tech}
               aria-label={tech}
-              className="inline-flex h-7 max-w-[9rem] items-center gap-1 rounded-lg border border-neutral-200 bg-neutral-100 px-1.5 text-[11px] text-slate-700 dark:border-slate-600 dark:bg-slate-800/70 dark:text-slate-200"
+              className="inline-flex h-7 max-w-36 items-center gap-1 rounded-lg border border-neutral-200 bg-neutral-100 px-1.5 text-[11px] text-slate-700 dark:border-slate-600 dark:bg-slate-800/70 dark:text-slate-200"
             >
               {getTechIcon(tech)}
               <span className="truncate">{tech}</span>
@@ -387,7 +387,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
         </div>
       )}
       <div className="flex flex-col gap-2">
-        <div className="min-w-0 grid gap-2 text-xs font-semibold [grid-template-columns:repeat(auto-fit,minmax(120px,1fr))]">
+        <div className="min-w-0 grid gap-2 text-xs font-semibold grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
           {project.codeUrl && (
             <a
               href={project.codeUrl}
@@ -460,7 +460,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       )}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 p-4 backdrop-blur-xs"
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-modal-title"
@@ -569,7 +569,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       )}
       {readmeProject && (
         <div
-          className="fixed inset-0 z-[60] overflow-y-auto bg-slate-950/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-60 overflow-y-auto bg-slate-950/80 p-4 backdrop-blur-xs"
           role="dialog"
           aria-modal="true"
           aria-labelledby="readme-modal-title"
@@ -636,7 +636,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                     )}
                   </div>
                 ) : (
-                  <div className="prose prose-slate max-w-none break-words prose-headings:font-display prose-a:text-primary-dark prose-a:underline prose-a:decoration-primary/40 prose-a:underline-offset-4 prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:text-slate-100 dark:prose-invert dark:prose-a:text-primary-light">
+                  <div className="prose prose-slate max-w-none wrap-break-word prose-headings:font-display prose-a:text-primary-dark prose-a:underline prose-a:decoration-primary/40 prose-a:underline-offset-4 prose-pre:rounded-xl prose-pre:bg-slate-900 prose-pre:text-slate-100 dark:prose-invert dark:prose-a:text-primary-light">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
                       components={{

@@ -34,7 +34,7 @@ const TimelineSection = ({ timeline, copy }: TimelineSectionProps) => {
           const badgeLabel = copy.badges[item.type]
           return (
             <article key={`${item.title}-${index}`} className="relative mb-8 last:mb-0">
-              <div className="absolute -left-[39px] flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-primary-dark text-xs font-semibold text-white shadow ring-4 ring-primary-light/30 dark:border-surface">
+              <div className="absolute left-[-39px] flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-primary-dark text-xs font-semibold text-white shadow-sm ring-4 ring-primary-light/30 dark:border-surface">
                 {index + 1}
               </div>
               <div className="space-y-2 rounded-2xl border border-neutral-300 bg-white p-5 shadow-soft dark:border-slate-700 dark:bg-surface">
@@ -61,7 +61,7 @@ const TimelineSection = ({ timeline, copy }: TimelineSectionProps) => {
             </article>
           )
         })}
-        <div className="absolute -left-[9px] top-0 bottom-0 w-[1px] bg-gradient-to-b from-primary-light/40 via-transparent to-primary/10" />
+        <div className="absolute left-[-9px] top-0 bottom-0 w-px bg-linear-to-b from-primary-light/40 via-transparent to-primary/10" />
       </div>
     </section>
   )

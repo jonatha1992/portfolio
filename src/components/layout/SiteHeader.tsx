@@ -22,10 +22,10 @@ const SiteHeader = ({ navItems, name, headline }: SiteHeaderProps) => {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-neutral-300 bg-white/95 backdrop-blur-lg shadow-sm dark:border-slate-700 dark:bg-surface/85">
+    <header className="sticky top-0 z-40 border-b border-neutral-300 bg-white/95 backdrop-blur-lg shadow-xs dark:border-slate-700 dark:bg-surface/85">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 md:px-6">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary/15 via-white to-primary/10 font-display text-sm font-semibold text-primary-dark shadow-sm">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-linear-to-br from-primary/15 via-white to-primary/10 font-display text-sm font-semibold text-primary-dark shadow-xs">
             {name
               .split(' ')
               .map((part) => part[0])

@@ -26,7 +26,7 @@ const ContactSection = ({ contact, socials, copy }: ContactSectionProps) => {
         description={copy.description}
         icon={<ChatBubbleLeftRightIcon className="h-6 w-6" />}
       />
-      <div className="grid gap-4 md:grid-cols-[1fr,1fr]">
+      <div className="grid gap-4 md:grid-cols-[1fr_1fr]">
         <div className="space-y-4 rounded-3xl border border-neutral-300 bg-white p-5 shadow-soft dark:border-slate-700 dark:bg-surface">
           <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white">
             {copy.directHeading}
@@ -79,7 +79,7 @@ const ContactSection = ({ contact, socials, copy }: ContactSectionProps) => {
             </li>
           </ul>
         </div>
-        <div className="space-y-4 rounded-3xl border border-neutral-300 bg-gradient-to-br from-primary-light/15 via-white to-primary-light/5 p-5 shadow-soft dark:border-slate-700 dark:from-primary/20 dark:via-surface dark:to-primary/10">
+        <div className="space-y-4 rounded-3xl border border-neutral-300 bg-linear-to-br from-primary-light/15 via-white to-primary-light/5 p-5 shadow-soft dark:border-slate-700 dark:from-primary/20 dark:via-surface dark:to-primary/10">
           <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white">
             {copy.networksHeading}
           </h3>

@@ -247,7 +247,7 @@ const renderSkillIcon = (iconId: string): ReactElement => (
       aria-hidden
       loading="lazy"
       decoding="async"
-      className="h-3.5 w-3.5 rounded-sm object-contain dark:hidden"
+      className="h-3.5 w-3.5 rounded-xs object-contain dark:hidden"
     />
     <img
       src={buildSkillIconUrl(iconId, 'dark')}
@@ -255,7 +255,7 @@ const renderSkillIcon = (iconId: string): ReactElement => (
       aria-hidden
       loading="lazy"
       decoding="async"
-      className="hidden h-3.5 w-3.5 rounded-sm object-contain dark:block"
+      className="hidden h-3.5 w-3.5 rounded-xs object-contain dark:block"
     />
   </span>
 )
