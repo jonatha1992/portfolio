@@ -51,6 +51,9 @@ const SiteFooter = ({ name, socials, note, linkLabels }: SiteFooterProps) => (
         })}
       </div>
     </div>
+    <p className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
+      Hecho por <a href="https://tecnofusion.dev" target="_blank" rel="noopener noreferrer" className="hover:underline">tecnofusion.dev</a>
+    </p>
   </footer>
 )
 
