@@ -107,7 +107,7 @@ const HeroSection = ({ personal, contact, socials, copy }: HeroSectionProps) => 
             alt={`Retrato de ${personal.name}`}
             className="h-full w-full object-cover object-center"
             containerClassName="h-full w-full"
-            loading="lazy"
+            loading="eager"
             fallback={
               <div className="flex h-full flex-col items-center justify-center bg-neutral-100 text-center text-sm text-slate-700 dark:bg-slate-800 dark:text-slate-200">
                 <span className="font-display text-lg font-semibold">{personal.name}</span>

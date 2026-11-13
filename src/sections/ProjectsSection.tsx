@@ -253,7 +253,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   }
 
   const cardActionLinkClassName =
-    'inline-flex items-center gap-1.5 text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary'
+    'inline-flex items-center justify-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:border-neutral-300 hover:bg-neutral-50 hover:text-slate-900 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white'
 
   const renderStatusBadge = (status?: string) => {
     if (!status) {
@@ -296,13 +296,23 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const renderProject = (project: Project) => (
     <article
       key={project.title}
-      className="group flex h-full w-full min-w-0 cursor-pointer flex-col gap-3 rounded-xl border border-neutral-200 bg-white p-5 text-left transition-colors hover:border-neutral-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-slate-800 dark:bg-surface dark:hover:border-slate-700"
+      className="group flex h-full w-full min-w-0 cursor-pointer flex-col gap-3 overflow-hidden rounded-xl border border-neutral-200 bg-white p-5 text-left transition-colors hover:border-neutral-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-slate-800 dark:bg-surface dark:hover:border-slate-700"
       onClick={() => openProjectModal(project)}
       onKeyDown={(event) => handleCardKeyDown(event, project)}
       role="button"
       tabIndex={0}
       aria-label={project.title}
     >
+      {project.media && (
+        <div className="-mx-5 -mt-5 mb-1 aspect-[16/10] overflow-hidden rounded-t-xl border-b border-neutral-200 bg-neutral-100 dark:border-slate-800 dark:bg-slate-800">
+          <img
+            src={project.media.src}
+            alt={project.media.alt}
+            loading="lazy"
+            className="h-full w-full object-cover object-top"
+          />
+        </div>
+      )}
       <div className="flex items-start justify-between gap-3">
         <h3 className="min-w-0 wrap-break-word font-display text-base font-semibold leading-snug text-slate-900 dark:text-white">
           {project.title}
@@ -319,7 +329,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
           {project.stack.length > 4 && <span className="text-slate-400 dark:text-slate-500"> +{project.stack.length - 4}</span>}
         </p>
       )}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-neutral-100 pt-3 text-sm font-medium dark:border-slate-800">
+      <div className="flex flex-wrap items-center gap-2 pt-1">
         {project.codeUrl && (
           <a
             href={project.codeUrl}

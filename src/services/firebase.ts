@@ -231,7 +231,8 @@ export function toProjectSlug(title: string): string {
  * (HTTP 402, cuenta de facturacion cerrada) y dejaban la tarjeta sin imagen.
  */
 function resolveProjectImage(title: string, remoteImage?: string): string | undefined {
-  return projectCovers[toProjectSlug(title)] ?? (remoteImage?.trim() || undefined)
+  void remoteImage
+  return projectCovers[toProjectSlug(title)]
 }
 
 /**
