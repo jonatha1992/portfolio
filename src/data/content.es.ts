@@ -7,7 +7,7 @@ export const profileContentEs: ProfileContent = {
     roles: ['Ingeniero de Software Full Stack', 'Senior Python Developer', 'Data Engineer'],
     availability: 'Disponible para nuevas oportunidades laborales',
     summary:
-      'Ingeniero de Software Full Stack, Senior Python Developer y Data Engineer orientado a automatizar procesos criticos, disenar pipelines resilientes y construir productos digitales end-to-end. Desde 2015 formo parte del personal IT de la Policia de Seguridad Aeroportuaria, liderando iniciativas con Python, Django, Flask, React y Next.js, e integrando IA generativa para acelerar analisis, documentacion tecnica y toma de decisiones.',
+      'Ingeniero de Software Full Stack, Senior Python Developer y Data Engineer orientado a automatizar procesos críticos, diseñar pipelines resilientes y construir productos digitales end-to-end. Desde 2015 formo parte del personal IT de la Policía de Seguridad Aeroportuaria, liderando iniciativas con Python, Django, Flask, React y Next.js, e integrando IA generativa para acelerar análisis, documentación técnica y toma de decisiones.',
     location: 'Buenos Aires, Argentina',
     photo: '/assets/profile/jonathan-correa.jpg',
   },
@@ -17,7 +17,7 @@ export const profileContentEs: ProfileContent = {
       items: ['Python', 'C#', 'JavaScript / TypeScript', 'SQL', 'R'],
     },
     {
-      label: 'Frameworks y librerias',
+      label: 'Frameworks y librerías',
       items: ['React', 'Next.js', 'FastAPI', 'Flask', 'Django', '.NET', 'Pandas', 'NumPy', 'TensorFlow'],
     },
     {
@@ -33,8 +33,8 @@ export const profileContentEs: ProfileContent = {
       items: ['OpenCV', 'Scikit-learn', 'MLOps', 'Modelos Predictivos'],
     },
     {
-      label: 'Automatizacion e IA generativa',
-      items: ['Automatizacion de Procesos', 'Prompt Engineering', 'OpenAI API', 'Asistentes IA'],
+      label: 'Automatización e IA generativa',
+      items: ['Automatización de Procesos', 'Prompt Engineering', 'OpenAI API', 'Asistentes IA'],
     },
     {
       label: 'Herramientas',
@@ -43,15 +43,15 @@ export const profileContentEs: ProfileContent = {
   ],
   projects: [
     {
-      title: 'Plataforma de Analitica Operacional PSA',
+      title: 'Plataforma de Analítica Operacional PSA',
       role: 'Arquitecto de Datos y Full Stack',
       period: '2023 · PSA',
       summary:
-        'Portal unificado para visualizar indicadores criticos de seguridad aeroportuaria integrando fuentes heterogeneas y ETL diarios automatizados.',
+        'Portal unificado para visualizar indicadores críticos de seguridad aeroportuaria, integrando fuentes heterogéneas y ETL diarios automatizados.',
       highlights: [
-        'Pipelines de ingesta y normalizacion con Python y Airflow.',
+        'Pipelines de ingesta y normalización con Python y Airflow.',
         'Dashboards interactivos embebidos con Power BI y React para analistas y mandos medios.',
-        'Control de acceso granular y auditoria alineada a normativas de seguridad.',
+        'Control de acceso granular y auditoría alineada a normativas de seguridad.',
       ],
       stack: ['React', 'FastAPI', 'PostgreSQL', 'Power BI', 'Docker', 'Tailwind CSS'],
       media: {
@@ -61,15 +61,15 @@ export const profileContentEs: ProfileContent = {
       },
     },
     {
-      title: 'Sistema de Reconocimiento de Matriculas',
-      role: 'Lider Tecnico Vision AI',
+      title: 'Sistema de Reconocimiento de Matrículas',
+      role: 'Líder Técnico Visión AI',
       period: '2021 · PSA',
       summary:
-        'Solucion de vision por computadora para lectura automatica de matriculas en zonas restringidas con alertas en tiempo real.',
+        'Solución de visión por computadora para lectura automática de matrículas en zonas restringidas con alertas en tiempo real.',
       highlights: [
         'Entrenamiento de modelos CNN con TensorFlow y dataset propio anonimizado.',
-        'Optimización de inferencia para ejecucion en edge con NVIDIA Jetson.',
-        'Integracion con APIs internas para tickets y alertas en el SOC.',
+        'Optimización de inferencia para ejecución en edge con NVIDIA Jetson.',
+        'Integración con APIs internas para tickets y alertas en el SOC.',
       ],
       stack: ['Python', 'TensorFlow', 'OpenCV', 'Docker', 'Azure DevOps'],
       media: {
@@ -79,15 +79,15 @@ export const profileContentEs: ProfileContent = {
       },
     },
     {
-      title: 'Automatizacion de Reportes de Inteligencia',
+      title: 'Automatización de Reportes de Inteligencia',
       role: 'Data Engineer',
       period: '2019 · PSA',
       summary:
-        'Automatizacion integral de reportes diarios y semanales con scripts orquestados y dashboards dinamicos.',
+        'Automatización integral de reportes diarios y semanales con scripts orquestados y dashboards dinámicos.',
       highlights: [
-        'Generacion de reportes PDF y envios segmentados por unidad operativa.',
+        'Generación de reportes PDF y envíos segmentados por unidad operativa.',
         'Modelos predictivos de demanda con scikit-learn para anticipar recursos.',
-        'Reduccion del tiempo de elaboracion de horas a minutos.',
+        'Reducción del tiempo de elaboración de horas a minutos.',
       ],
       stack: ['Python', 'Pandas', 'scikit-learn', 'Power BI', 'SQL Server'],
       media: {
@@ -99,40 +99,40 @@ export const profileContentEs: ProfileContent = {
   ],
   achievements: [
     {
-      title: 'Automatizacion estrategica en PSA',
+      title: 'Automatización estratégica en PSA',
       description:
-        'Automatizaciones que liberaron cientos de horas anuales, reduciendo errores manuales y asegurando trazabilidad end-to-end sobre pipelines criticos.',
+        'Automatizaciones que liberaron cientos de horas anuales, reduciendo errores manuales y asegurando trazabilidad end-to-end sobre pipelines críticos.',
       tech: ['Python', 'Airflow', 'Power BI', 'Jupyter'],
-      impact: 'Procesos criticos 100% trazables y respuesta operacional mas rapida.',
+      impact: 'Procesos críticos 100% trazables y respuesta operacional más rápida.',
     },
     {
-      title: 'Modelos predictivos para asignacion de recursos',
+      title: 'Modelos predictivos para asignación de recursos',
       description:
-        'Modelos que anticipan el flujo operativo aeroportuario, habilitando decisiones tacticas basadas en datos.',
+        'Modelos que anticipan el flujo operativo aeroportuario, habilitando decisiones tácticas basadas en datos.',
       tech: ['scikit-learn', 'Pandas', 'Power BI'],
     },
     {
       title: 'Dashboards ejecutivos en tiempo real',
       description:
-        'Dashboards que consolidan metricas de inteligencia, logistica y operaciones para la cadena de mando.',
+        'Dashboards que consolidan métricas de inteligencia, logística y operaciones para la cadena de mando.',
       tech: ['React', 'Power BI', 'Firebase'],
     },
     {
       title: 'Arquitectura de datos escalable',
       description:
-        'Estandarizacion de modelos de datos y pipelines ELT con dbt y Python, reduciendo un 40% el onboarding de indicadores.',
+        'Estandarización de modelos de datos y pipelines ELT con dbt y Python, reduciendo un 40% el tiempo de onboarding de indicadores.',
       tech: ['Python', 'dbt', 'SQL Server', 'Airflow'],
     },
   ],
   experience: [
     {
-      company: 'Policia de Seguridad Aeroportuaria',
+      company: 'Policía de Seguridad Aeroportuaria',
       role: 'Ingeniero de Software Full Stack | Sr. Python Developer & Data Engineer',
       period: '2015 — Actualidad',
       responsibilities: [
-        'Lidero proyectos de automatizacion de procesos, analitica avanzada y desarrollo full stack orientados a seguridad aeroportuaria.',
-        'Orquesto pipelines de datos y APIs en Python (Django, Flask, FastAPI), integrando fuentes heterogeneas y frontends con React y Next.js.',
-        'Implemento MLOps, computer vision, dashboards ejecutivos y flujos asistidos por IA generativa con monitoreo continuo y metricas de impacto.',
+        'Lidero proyectos de automatización de procesos, analítica avanzada y desarrollo full stack orientados a seguridad aeroportuaria.',
+        'Orquesto pipelines de datos y APIs en Python (Django, Flask, FastAPI), integrando fuentes heterogéneas y frontends con React y Next.js.',
+        'Implemento MLOps, computer vision, dashboards ejecutivos y flujos asistidos por IA generativa con monitoreo continuo y métricas de impacto.',
       ],
       stack: ['Python', 'Django', 'Flask', 'FastAPI', 'React', 'Next.js', 'C#', 'Power BI', 'Airflow', 'TensorFlow', 'OpenAI API'],
     },
@@ -140,9 +140,9 @@ export const profileContentEs: ProfileContent = {
   education: [
     {
       institution: 'Universidad Abierta Interamericana (UAI)',
-      program: 'Ingenieria en Sistemas Informaticos (4.º año) · Titulo intermedio obtenido: Analista Programador',
+      program: 'Ingeniería en Sistemas Informáticos (4.º año) · Título intermedio obtenido: Analista Programador',
       period: '2019 — Actualidad',
-    }
+    },
   ],
   certifications: [
     {
@@ -151,8 +151,8 @@ export const profileContentEs: ProfileContent = {
       year: 2021,
     },
     {
-      name: 'Especializacion en Ciencia de Datos aplicada',
-      issuer: 'Universidad Nacional de Cordoba',
+      name: 'Especialización en Ciencia de Datos Aplicada',
+      issuer: 'Universidad Nacional de Córdoba',
       year: 2022,
     },
   ],
@@ -160,7 +160,7 @@ export const profileContentEs: ProfileContent = {
     email: 'jonathancorrea291292@hotmail.com',
     phone: '+54 9 11 5991-0666',
     location: 'Buenos Aires, Argentina',
-    availabilityNote: 'Respondo rapido por LinkedIn y correo electronico.',
+    availabilityNote: 'Respondo rápido por LinkedIn y correo electrónico.',
   },
   socials: {
     linkedin: 'https://www.linkedin.com/in/jonathan-gabriel-correa-9a2091218/',
@@ -171,13 +171,13 @@ export const profileContentEs: ProfileContent = {
     {
       title: 'Automatizando ETL de inteligencia operativa con Python y Airflow',
       url: '#',
-      description: 'Lecciones tecnicas para orquestar pipelines de datos criticos con foco en seguridad y auditoria.',
+      description: 'Lecciones técnicas para orquestar pipelines de datos críticos con foco en seguridad y auditoría.',
       tags: ['Python', 'Airflow', 'Seguridad'],
     },
     {
       title: 'Computer Vision aplicada a seguridad aeroportuaria',
       url: '#',
-      description: 'Como prototipar, entrenar y desplegar modelos de vision por computadora en entornos restringidos.',
+      description: 'Cómo prototipar, entrenar y desplegar modelos de visión por computadora en entornos restringidos.',
       tags: ['Computer Vision', 'TensorFlow'],
     },
   ],
@@ -185,19 +185,19 @@ export const profileContentEs: ProfileContent = {
     {
       type: 'work',
       title: 'Ingeniero de Software Full Stack & Data Engineer',
-      organization: 'Policia de Seguridad Aeroportuaria',
+      organization: 'Policía de Seguridad Aeroportuaria',
       from: '2015',
       description:
-        'Responsable de automatizacion de procesos, inteligencia de datos, soluciones full stack e integraciones de IA generativa en despliegues TI criticos.',
+        'Responsable de automatización de procesos, pipelines de datos, soluciones full stack e integraciones de IA generativa en despliegues TI críticos.',
       tech: ['Python', 'Django', 'React', 'Next.js', 'Power BI', 'OpenAI API'],
     },
     {
       type: 'education',
-      title: 'Ingenieria en Sistemas Informaticos (4.º año)',
+      title: 'Ingeniería en Sistemas Informáticos (4.º año)',
       organization: 'Universidad Abierta Interamericana (UAI)',
       from: '2019',
       description:
-        'Cursando cuarto año en la UAI con el titulo intermedio de Analista Programador ya obtenido, profundizando en arquitectura de software y sistemas distribuidos.',
+        'Cursando cuarto año en la UAI con el título intermedio de Analista Programador ya obtenido, profundizando en arquitectura de software y sistemas distribuidos.',
       tech: ['Python', 'Sistemas Distribuidos', 'Arquitectura de Software'],
     },
     {
@@ -205,7 +205,7 @@ export const profileContentEs: ProfileContent = {
       title: 'Microsoft Certified: Data Analyst Associate',
       organization: 'Microsoft',
       from: '2021',
-      description: 'Certificacion que avala modelado de datos y dashboards orientados a decisiones accionables.',
+      description: 'Certificación que avala modelado de datos y dashboards orientados a decisiones accionables.',
       tech: ['Power BI', 'DAX', 'Modelado de Datos'],
     },
   ],

@@ -1,4 +1,3 @@
-import { BriefcaseIcon } from '@heroicons/react/24/outline'
 import SectionHeader from '../components/common/SectionHeader'
 import Pill from '../components/common/Pill'
 import type { ProfileContent } from '../data/types'
@@ -17,30 +16,29 @@ const ExperienceSection = ({ experience, copy }: ExperienceSectionProps) => {
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
-        icon={<BriefcaseIcon className="h-6 w-6" />}
       />
       <div className="space-y-4">
         {experience.map((job) => (
           <article
             key={job.company}
-            className="rounded-3xl border border-neutral-300 bg-white p-6 shadow-soft dark:border-slate-700 dark:bg-surface"
+            className="rounded-xl border border-neutral-200 bg-white p-5 dark:border-slate-800 dark:bg-surface"
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h3 className="font-display text-xl font-semibold text-slate-900 dark:text-white">{job.role}</h3>
-                <p className="text-sm font-medium uppercase tracking-[0.25em] text-primary">{job.company}</p>
+                <h3 className="font-display text-base font-semibold text-slate-900 dark:text-white">{job.role}</h3>
+                <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400">{job.company}</p>
               </div>
               <Pill label={job.period} variant="primary" />
             </div>
-            <ul className="mt-4 space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+            <ul className="mt-3.5 space-y-2 text-sm text-slate-600 dark:text-slate-300">
               {job.responsibilities.map((responsibility) => (
-                <li key={responsibility} className="flex gap-3">
-                  <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+                <li key={responsibility} className="flex gap-2.5">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400 dark:bg-slate-500" aria-hidden />
                   <span>{responsibility}</span>
                 </li>
               ))}
             </ul>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-3.5 flex flex-wrap gap-2">
               {job.stack.map((tech) => (
                 <Pill key={tech} label={tech} icon={getTechIcon(tech)} />
               ))}

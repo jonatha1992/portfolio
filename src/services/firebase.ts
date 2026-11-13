@@ -169,6 +169,46 @@ function toDate(timestamp?: FirebaseTimestamp): Date | null {
   return new Date(timestamp._seconds * 1000)
 }
 
+const PROJECT_DESCRIPTION_OVERRIDES: Record<string, { es: string; en: string }> = {
+  'tecnofusion': {
+    es: 'Sitio corporativo y plataforma de servicios IT para desarrollo de software y soluciones cloud.',
+    en: 'Corporate website and IT services platform for software development and cloud solutions.',
+  },
+  'portfolio-tecnico-jonathan-correa': {
+    es: 'Portfolio personal bilingüe desarrollado con React, TypeScript y Tailwind CSS, integrado con Firestore y asistente IA.',
+    en: 'Bilingual technical portfolio built with React, TypeScript, and Tailwind CSS, featuring Firestore catalog and AI assistant.',
+  },
+  'sentinel-compliance-engine-corvux-aml-dashboard': {
+    es: 'Dashboard de cumplimiento anti-lavado de activos (AML) con Blazor Server (.NET 9), Entity Framework Core y SQL Server para auditoría y evaluación de reglas.',
+    en: 'Anti-money laundering (AML) compliance dashboard built with Blazor Server (.NET 9), Entity Framework Core, and SQL Server for auditing transactions.',
+  },
+}
+
+function cleanMojibake(text: string): string {
+  return text
+    .replace(/Ã¡/g, 'á')
+    .replace(/Ã©/g, 'é')
+    .replace(/Ã­/g, 'í')
+    .replace(/Ã³/g, 'ó')
+    .replace(/Ãº/g, 'ú')
+    .replace(/Ã±/g, 'ñ')
+    .replace(/Ã\u0081/g, 'Á')
+    .replace(/Ã\u0089/g, 'É')
+    .replace(/Ã\u008D/g, 'Í')
+    .replace(/Ã\u0093/g, 'Ó')
+    .replace(/Ã\u009A/g, 'Ú')
+    .replace(/Ã\u0091/g, 'Ñ')
+}
+
+function resolveProjectSummary(title: string, rawDescription?: string, locale: Locale = 'es'): string {
+  const slug = toProjectSlug(title)
+  const override = PROJECT_DESCRIPTION_OVERRIDES[slug]
+  if (override) {
+    return locale === 'en' ? override.en : override.es
+  }
+  return rawDescription ? cleanMojibake(rawDescription) : ''
+}
+
 function getProjectRole(locale: Locale): string {
   return locale === 'es' ? 'Proyecto' : 'Project'
 }
@@ -210,7 +250,7 @@ export function transformFirebaseProject(firebaseProject: FirebaseProject, local
     title: firebaseProject.title,
     role: getProjectRole(locale),
     period: year,
-    summary: firebaseProject.description ?? '',
+    summary: resolveProjectSummary(firebaseProject.title, firebaseProject.description, locale),
     highlights: [],
     stack: firebaseProject.technologies ?? [],
     codeUrl: validGithubUrl,

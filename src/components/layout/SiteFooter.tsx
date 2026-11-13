@@ -26,11 +26,11 @@ const iconMap: Record<(typeof linkKeys)[number], ReactElement> = {
 }
 
 const SiteFooter = ({ name, socials, note, linkLabels }: SiteFooterProps) => (
-  <footer className="border-t border-neutral-300 bg-white/80 py-7 backdrop-blur-sm dark:border-slate-700/60 dark:bg-surface/80">
+  <footer className="border-t border-neutral-200 bg-white py-6 dark:border-slate-800 dark:bg-slate-900">
     <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between md:px-6">
       <div>
-        <p className="font-display text-base font-semibold text-slate-900 dark:text-white">{name}</p>
-        <p className="text-sm text-slate-500 dark:text-slate-300">{note}</p>
+        <p className="font-display text-sm font-semibold text-slate-900 dark:text-white">{name}</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400">{note}</p>
       </div>
       <div className="flex gap-4">
         {linkKeys.map((key) => {
@@ -42,7 +42,7 @@ const SiteFooter = ({ name, socials, note, linkLabels }: SiteFooterProps) => (
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-primary-dark dark:text-slate-200 dark:hover:text-primary-light"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white"
             >
               {iconMap[key]}
               {linkLabels[key]}
@@ -51,7 +51,7 @@ const SiteFooter = ({ name, socials, note, linkLabels }: SiteFooterProps) => (
         })}
       </div>
     </div>
-    <p className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
+    <p className="mt-5 text-center text-xs text-slate-400 dark:text-slate-500">
       Hecho por <a href="https://tecnofusion.dev" target="_blank" rel="noopener noreferrer" className="hover:underline">tecnofusion.dev</a>
     </p>
   </footer>

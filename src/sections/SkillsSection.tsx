@@ -1,9 +1,7 @@
-import { CpuChipIcon } from '@heroicons/react/24/outline'
 import SectionHeader from '../components/common/SectionHeader'
 import Pill from '../components/common/Pill'
 import type { ProfileContent } from '../data/types'
 import type { UiCopy } from '../i18n'
-import { getTechIcon } from '../icons/techIcons'
 
 type SkillsSectionProps = {
   skills: ProfileContent['skills']
@@ -17,20 +15,19 @@ const SkillsSection = ({ skills, copy }: SkillsSectionProps) => {
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
-        icon={<CpuChipIcon className="h-6 w-6" />}
       />
       <div className="grid gap-4 md:grid-cols-2">
         {skills.map((category) => (
           <article
             key={category.label}
-            className="group rounded-2xl border border-neutral-300 bg-white p-5 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow dark:border-slate-700 dark:bg-surface"
+            className="rounded-xl border border-neutral-200 bg-white p-5 dark:border-slate-800 dark:bg-surface"
           >
-            <h3 className="mb-2.5 font-display text-base font-semibold text-slate-900 dark:text-white">
+            <h3 className="mb-3 font-display text-base font-semibold text-slate-900 dark:text-white">
               {category.label}
             </h3>
             <div className="flex flex-wrap gap-2">
               {category.items.map((item) => (
-                <Pill key={item} label={item} icon={getTechIcon(item)} />
+                <Pill key={item} label={item} />
               ))}
             </div>
           </article>

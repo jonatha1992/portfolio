@@ -56,6 +56,7 @@ export const LocaleProvider = ({ children }: LocaleProviderProps) => {
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLocale = (): LocaleContextValue => {
   const context = useContext(LocaleContext)
   if (!context) {

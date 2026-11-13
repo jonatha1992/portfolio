@@ -368,22 +368,22 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label={copy.openLabel}
-          className="inline-flex items-center gap-2 rounded-full bg-primary px-3.5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-primary/35 transition hover:bg-primary-light"
+          className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-3.5 py-2 text-xs font-medium text-slate-700 shadow-md transition hover:bg-neutral-50 hover:text-slate-900 dark:border-slate-700 dark:bg-surface dark:text-slate-200 dark:hover:bg-slate-700/60 dark:hover:text-white"
         >
-          <ChatBubbleLeftRightIcon className="h-5 w-5" />
+          <ChatBubbleLeftRightIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
           <span>{copy.openLabel}</span>
         </button>
       )}
 
       {isOpen && (
-        <section className="flex h-[min(74vh,600px)] w-full flex-col overflow-hidden rounded-2xl border border-neutral-300 bg-white shadow-2xl dark:border-slate-700 dark:bg-surface">
-          <header className="flex items-start justify-between gap-3 border-b border-neutral-300 bg-linear-to-r from-primary/10 via-white to-accent/15 px-3 py-2.5 dark:border-slate-700 dark:from-primary/20 dark:via-surface dark:to-primary/10">
-            <div className="min-w-0 space-y-1">
+        <section className="flex h-[min(74vh,600px)] w-full flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-xl dark:border-slate-800 dark:bg-surface">
+          <header className="flex items-start justify-between gap-3 border-b border-neutral-200 bg-neutral-50 px-3.5 py-2.5 dark:border-slate-800 dark:bg-slate-800/60">
+            <div className="min-w-0 space-y-0.5">
               <p className="flex items-center gap-2 font-display text-sm font-semibold text-slate-900 dark:text-white">
-                <SparklesIcon className="h-4 w-4 text-primary-dark dark:text-primary-light" />
+                <SparklesIcon className="h-4 w-4 text-slate-500 dark:text-slate-400" />
                 {copy.title}
               </p>
-              <p className="text-xs text-slate-600 dark:text-slate-300">{copy.subtitle}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">{copy.subtitle}</p>
             </div>
             <div className="flex items-center gap-1">
               <button
@@ -414,7 +414,7 @@ const PortfolioAgentChat = ({ locale, content, copy }: PortfolioAgentChatProps) 
                       key={prompt}
                       type="button"
                       onClick={() => handleQuickPrompt(prompt)}
-                      className="rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary-dark transition hover:border-primary-light hover:bg-primary/10 dark:border-primary/40 dark:text-primary-light"
+                      className="rounded-md border border-neutral-200 bg-neutral-100 px-2.5 py-1 text-xs text-slate-600 transition hover:bg-neutral-200 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-white"
                     >
                       {prompt}
                     </button>

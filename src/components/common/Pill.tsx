@@ -9,19 +9,19 @@ type PillProps = {
 }
 
 const baseClasses =
-  'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-[0.04em]'
+  'inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs font-normal normal-case transition-colors'
 
 const variants: Record<PillVariant, string> = {
   primary:
-    'border-primary-light/40 bg-primary-light/15 text-primary-dark transition hover:border-primary-light hover:bg-primary-light/25 dark:border-primary/50 dark:bg-primary/20 dark:text-primary-light',
+    'border-neutral-200 bg-neutral-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200',
   neutral:
-    'border-neutral-300 bg-white text-slate-600 transition hover:border-primary-light hover:text-primary-light dark:border-slate-600 dark:bg-surface/70 dark:text-slate-200',
+    'border-neutral-200 bg-white text-slate-700 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-300',
 }
 
 const Pill = ({ label, variant = 'neutral', icon }: PillProps) => {
   return (
     <span className={`${baseClasses} ${variants[variant]}`}>
-      {icon && <span className="flex items-center text-base">{icon}</span>}
+      {icon && <span className="flex items-center text-sm text-slate-500 dark:text-slate-400">{icon}</span>}
       {label}
     </span>
   )

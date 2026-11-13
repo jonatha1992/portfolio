@@ -260,23 +260,8 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
     setIsReadmeLoading(false)
   }
 
-  const getVisibleCardTech = (stack: string[]) => stack.slice(0, 4)
   const cardActionLinkClassName =
-    'inline-flex w-full items-center justify-center gap-2 rounded-lg border border-neutral-300/90 px-2 py-2 text-center text-primary-dark transition hover:border-primary-light hover:text-primary-light dark:border-slate-600 dark:text-primary-light dark:hover:border-primary-light dark:hover:text-white'
-
-  const getStatusBadgeClasses = (status: string) => {
-    const normalizedStatus = status.trim().toLowerCase()
-
-    if (normalizedStatus.includes('produ')) {
-      return 'bg-emerald-600/90'
-    }
-
-    if (normalizedStatus.includes('desar')) {
-      return 'bg-amber-500/90 text-slate-950'
-    }
-
-    return 'bg-primary/90'
-  }
+    'inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-2.5 py-1.5 text-center text-xs font-medium text-slate-700 transition hover:bg-neutral-100 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white'
 
   const renderStatusBadge = (status?: string) => {
     if (!status) {
@@ -285,7 +270,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
 
     return (
       <span
-        className={`inline-flex rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white shadow-lg backdrop-blur-xs ${getStatusBadgeClasses(status)}`}
+        className="inline-flex items-center rounded-md border border-neutral-200/80 bg-white/95 px-2 py-0.5 text-[11px] font-medium text-slate-700 shadow-xs backdrop-blur-xs dark:border-slate-700/80 dark:bg-slate-900/95 dark:text-slate-300"
         aria-label={`${copy.statusLabel}: ${status}`}
       >
         {status}
@@ -319,7 +304,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const renderProject = (project: Project) => (
     <article
       key={project.title}
-      className="group grid h-full w-full min-w-0 cursor-pointer gap-2.5 overflow-hidden rounded-2xl border border-neutral-300 bg-white p-3.5 text-center shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-light dark:border-slate-700 dark:bg-surface"
+      className="group grid h-full w-full min-w-0 cursor-pointer gap-2.5 overflow-hidden rounded-xl border border-neutral-200 bg-white p-3.5 text-center transition hover:border-neutral-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-slate-800 dark:bg-surface dark:hover:border-slate-700"
       onClick={() => openProjectModal(project)}
       onKeyDown={(event) => handleCardKeyDown(event, project)}
       role="button"
@@ -328,7 +313,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
     >
       {/* Project Image */}
       {project.media && (
-        <div className="relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-slate-600">
+        <div className="relative overflow-hidden rounded-lg border border-neutral-200 dark:border-slate-700">
           <ImageWithLoader
             src={project.media.src}
             alt={project.media.alt}
@@ -344,45 +329,39 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
               </div>
             }
           />
-          <div className="absolute left-1/2 top-2 -translate-x-1/2">{renderStatusBadge(project.status)}</div>
+          {project.status && <div className="absolute right-2 top-2">{renderStatusBadge(project.status)}</div>}
         </div>
       )}
-      {!project.media && project.status && <div className="flex justify-center">{renderStatusBadge(project.status)}</div>}
+      {!project.media && project.status && <div className="flex justify-end">{renderStatusBadge(project.status)}</div>}
 
       <div className="min-w-0">
         <h3 className="wrap-break-word font-display text-base font-semibold leading-tight text-slate-900 dark:text-white sm:text-lg">
           {project.title}
         </h3>
-        <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-primary">{project.role}</p>
+        {project.role && !['proyecto', 'project'].includes(project.role.trim().toLowerCase()) && (
+          <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">{project.role}</p>
+        )}
       </div>
       <p className="text-sm text-slate-600 dark:text-slate-300">{getSummaryExcerpt(project.summary)}</p>
       {project.highlights.length > 0 && (
-        <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+        <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
           {project.highlights.map((highlight) => (
             <li key={highlight} className="flex justify-center gap-2 text-left">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
+              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400 dark:bg-slate-500" aria-hidden />
               <span>{highlight}</span>
             </li>
           ))}
         </ul>
       )}
       {project.stack.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-1.5" aria-label="Project technologies">
-          {getVisibleCardTech(project.stack).map((tech, index) => (
-            <span
-              key={`${project.title}-${tech}-${index}`}
-              title={tech}
-              aria-label={tech}
-              className="inline-flex h-7 max-w-36 items-center gap-1 rounded-lg border border-neutral-200 bg-neutral-100 px-1.5 text-[11px] text-slate-700 dark:border-slate-600 dark:bg-slate-800/70 dark:text-slate-200"
-            >
-              {getTechIcon(tech)}
-              <span className="truncate">{tech}</span>
+        <div className="flex flex-wrap justify-center gap-x-2 gap-y-1 text-xs text-slate-500 dark:text-slate-400" aria-label="Project technologies">
+          {project.stack.slice(0, 4).map((tech, index) => (
+            <span key={`${project.title}-${tech}-${index}`}>
+              {tech}{index < Math.min(project.stack.length, 4) - 1 ? ' ·' : ''}
             </span>
           ))}
           {project.stack.length > 4 && (
-            <span className="inline-flex h-7 items-center rounded-lg border border-neutral-200 bg-neutral-100 px-2 text-[11px] font-semibold text-slate-700 dark:border-slate-600 dark:bg-slate-800/70 dark:text-slate-200">
-              +{project.stack.length - 4}
-            </span>
+            <span className="text-slate-400 dark:text-slate-500">+{project.stack.length - 4}</span>
           )}
         </div>
       )}
@@ -436,7 +415,6 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
-        icon={<CommandLineIcon className="h-6 w-6" />}
       />
       {isLoading ? (
         <div className="grid gap-4">

@@ -10,19 +10,16 @@ const LanguageToggle = ({ className = '' }: LanguageToggleProps) => {
   const isSpanish = locale === 'es'
 
   const baseClasses =
-    'flex h-9 w-9 items-center justify-center rounded-full border transition shadow-xs focus:outline-hidden focus:ring-2 focus:ring-primary-light/50'
-  const stateClasses = isSpanish
-    ? 'border-primary bg-primary text-white dark:border-primary/80 dark:bg-primary/80'
-    : 'border-neutral-300 bg-white text-slate-600 hover:border-primary-light hover:text-primary-light dark:border-slate-600 dark:bg-surface/80 dark:text-slate-200 dark:hover:text-primary-light'
+    'flex h-8 w-8 items-center justify-center rounded-lg border border-neutral-200 bg-white text-xs font-medium text-slate-700 transition hover:bg-neutral-100 hover:text-slate-900 focus:outline-hidden dark:border-slate-700 dark:bg-surface dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white'
 
   return (
     <button
       type="button"
       onClick={toggleLocale}
-      className={`${baseClasses} ${stateClasses} ${className}`.trim()}
+      className={`${baseClasses} ${className}`.trim()}
       aria-label={isSpanish ? 'Cambiar a inglés' : 'Switch to Spanish'}
     >
-      <span className="text-xs font-semibold">{isSpanish ? 'ES' : 'EN'}</span>
+      <span>{isSpanish ? 'ES' : 'EN'}</span>
     </button>
   )
 }

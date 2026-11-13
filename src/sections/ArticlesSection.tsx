@@ -1,4 +1,3 @@
-import { NewspaperIcon } from '@heroicons/react/24/outline'
 import SectionHeader from '../components/common/SectionHeader'
 import Pill from '../components/common/Pill'
 import type { ProfileContent } from '../data/types'
@@ -21,20 +20,19 @@ const ArticlesSection = ({ articles, copy }: ArticlesSectionProps) => {
         eyebrow={copy.eyebrow}
         title={copy.title}
         description={copy.description}
-        icon={<NewspaperIcon className="h-6 w-6" />}
       />
       <div className="grid gap-4 md:grid-cols-2">
         {articles.map((article) => (
           <article
             key={article.title}
-            className="group rounded-3xl border border-neutral-300 bg-white p-5 shadow-soft transition hover:-translate-y-1 hover:border-primary-light hover:shadow-glow dark:border-slate-700 dark:bg-surface"
+            className="rounded-xl border border-neutral-200 bg-white p-5 dark:border-slate-800 dark:bg-surface"
           >
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h3 className="font-display text-lg font-semibold text-slate-900 dark:text-white">{article.title}</h3>
+              <h3 className="font-display text-base font-semibold text-slate-900 dark:text-white">{article.title}</h3>
               <Pill label={copy.upcomingLabel} variant="primary" />
             </div>
-            <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{article.description}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <p className="mt-2.5 text-sm text-slate-600 dark:text-slate-300">{article.description}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
               {article.tags?.map((tag) => (
                 <Pill key={tag} label={tag} icon={getTechIcon(tag)} />
               ))}
@@ -44,7 +42,7 @@ const ArticlesSection = ({ articles, copy }: ArticlesSectionProps) => {
                 href={article.url}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex items-center text-sm font-semibold text-primary transition hover:text-primary-dark"
+                className="mt-4 inline-flex items-center text-xs font-medium text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white transition-colors"
               >
                 {copy.readMoreLabel}
               </a>
