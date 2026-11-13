@@ -1,9 +1,7 @@
 
 import { useState, useEffect } from 'react'
-import { CommandLineIcon } from '@heroicons/react/24/outline'
 import SectionHeader from '../components/common/SectionHeader'
 import Pill from '../components/common/Pill'
-import ImageWithLoader from '../components/common/ImageWithLoader'
 import type { ProfileContent, Project, Locale } from '../data/types'
 import type { UiCopy } from '../i18n'
 import { FiGithub, FiExternalLink, FiFileText, FiX } from 'react-icons/fi'
@@ -236,16 +234,10 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
     const normalizedSummary = summary.trim()
 
     if (!normalizedSummary) {
-      return locale === 'es' ? 'Sin descripcion disponible.' : 'No description available.'
+      return locale === 'es' ? 'Sin descripción disponible.' : 'No description available.'
     }
 
-    const maxLength = 110
-
-    if (normalizedSummary.length <= maxLength) {
-      return normalizedSummary
-    }
-
-    return `${normalizedSummary.slice(0, maxLength).trimEnd()}...`
+    return normalizedSummary
   }
 
   const closeProjectModal = () => {
@@ -261,7 +253,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   }
 
   const cardActionLinkClassName =
-    'inline-flex w-full items-center justify-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-2.5 py-1.5 text-center text-xs font-medium text-slate-700 transition hover:bg-neutral-100 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800/60 dark:text-slate-200 dark:hover:bg-slate-700 dark:hover:text-white'
+    'inline-flex items-center gap-1.5 text-slate-600 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary'
 
   const renderStatusBadge = (status?: string) => {
     if (!status) {
@@ -270,7 +262,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
 
     return (
       <span
-        className="inline-flex items-center rounded-md border border-neutral-200/80 bg-white/95 px-2 py-0.5 text-[11px] font-medium text-slate-700 shadow-xs backdrop-blur-xs dark:border-slate-700/80 dark:bg-slate-900/95 dark:text-slate-300"
+        className="inline-flex items-center rounded-md border border-neutral-200/80 bg-white px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:border-slate-700/80 dark:bg-slate-900 dark:text-slate-300"
         aria-label={`${copy.statusLabel}: ${status}`}
       >
         {status}
@@ -304,107 +296,67 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const renderProject = (project: Project) => (
     <article
       key={project.title}
-      className="group grid h-full w-full min-w-0 cursor-pointer gap-2.5 overflow-hidden rounded-xl border border-neutral-200 bg-white p-3.5 text-center transition hover:border-neutral-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-slate-800 dark:bg-surface dark:hover:border-slate-700"
+      className="group flex h-full w-full min-w-0 cursor-pointer flex-col gap-3 rounded-xl border border-neutral-200 bg-white p-5 text-left transition-colors hover:border-neutral-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-slate-800 dark:bg-surface dark:hover:border-slate-700"
       onClick={() => openProjectModal(project)}
       onKeyDown={(event) => handleCardKeyDown(event, project)}
       role="button"
       tabIndex={0}
       aria-label={project.title}
     >
-      {/* Project Image */}
-      {project.media && (
-        <div className="relative overflow-hidden rounded-lg border border-neutral-200 dark:border-slate-700">
-          <ImageWithLoader
-            src={project.media.src}
-            alt={project.media.alt}
-            containerClassName="h-36 w-full"
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-            spinnerDelayMs={0}
-            minimumLoadingMs={480}
-            loaderClassName="bg-slate-950/30 dark:bg-slate-900/65"
-            fallback={
-              <div role="img" aria-label={project.media.alt} className="flex h-full w-full items-center justify-center bg-neutral-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
-                <CommandLineIcon className="h-10 w-10" aria-hidden="true" />
-              </div>
-            }
-          />
-          {project.status && <div className="absolute right-2 top-2">{renderStatusBadge(project.status)}</div>}
-        </div>
-      )}
-      {!project.media && project.status && <div className="flex justify-end">{renderStatusBadge(project.status)}</div>}
-
-      <div className="min-w-0">
-        <h3 className="wrap-break-word font-display text-base font-semibold leading-tight text-slate-900 dark:text-white sm:text-lg">
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="min-w-0 wrap-break-word font-display text-base font-semibold leading-snug text-slate-900 dark:text-white">
           {project.title}
         </h3>
-        {project.role && !['proyecto', 'project'].includes(project.role.trim().toLowerCase()) && (
-          <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">{project.role}</p>
-        )}
+        {renderStatusBadge(project.status)}
       </div>
-      <p className="text-sm text-slate-600 dark:text-slate-300">{getSummaryExcerpt(project.summary)}</p>
-      {project.highlights.length > 0 && (
-        <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
-          {project.highlights.map((highlight) => (
-            <li key={highlight} className="flex justify-center gap-2 text-left">
-              <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400 dark:bg-slate-500" aria-hidden />
-              <span>{highlight}</span>
-            </li>
-          ))}
-        </ul>
+      {project.role && !['proyecto', 'project'].includes(project.role.trim().toLowerCase()) && (
+        <p className="-mt-2 text-xs text-slate-500 dark:text-slate-400">{project.role}</p>
       )}
+      <p className="line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{getSummaryExcerpt(project.summary)}</p>
       {project.stack.length > 0 && (
-        <div className="flex flex-wrap justify-center gap-x-2 gap-y-1 text-xs text-slate-500 dark:text-slate-400" aria-label="Project technologies">
-          {project.stack.slice(0, 4).map((tech, index) => (
-            <span key={`${project.title}-${tech}-${index}`}>
-              {tech}{index < Math.min(project.stack.length, 4) - 1 ? ' ·' : ''}
-            </span>
-          ))}
-          {project.stack.length > 4 && (
-            <span className="text-slate-400 dark:text-slate-500">+{project.stack.length - 4}</span>
-          )}
-        </div>
+        <p className="mt-auto text-xs text-slate-500 dark:text-slate-400" aria-label="Project technologies">
+          {project.stack.slice(0, 4).join(' · ')}
+          {project.stack.length > 4 && <span className="text-slate-400 dark:text-slate-500"> +{project.stack.length - 4}</span>}
+        </p>
       )}
-      <div className="flex flex-col gap-2">
-        <div className="min-w-0 grid gap-2 text-xs font-semibold grid-cols-[repeat(auto-fit,minmax(120px,1fr))]">
-          {project.codeUrl && (
-            <a
-              href={project.codeUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={cardActionLinkClassName}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <FiGithub className="h-4 w-4" />
-              {copy.codeCta}
-            </a>
-          )}
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={cardActionLinkClassName}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <FiExternalLink className="h-4 w-4" />
-              {copy.liveCta}
-            </a>
-          )}
-          {project.readmeUrl && (
-            <button
-              type="button"
-              className={cardActionLinkClassName}
-              onClick={(event) => {
-                event.stopPropagation()
-                openReadmeModal(project)
-              }}
-            >
-              <FiFileText className="h-4 w-4" />
-              {copy.readmeCta}
-            </button>
-          )}
-        </div>
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-neutral-100 pt-3 text-sm font-medium dark:border-slate-800">
+        {project.codeUrl && (
+          <a
+            href={project.codeUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={cardActionLinkClassName}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <FiGithub className="h-4 w-4" />
+            {copy.codeCta}
+          </a>
+        )}
+        {project.liveUrl && (
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noreferrer"
+            className={cardActionLinkClassName}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <FiExternalLink className="h-4 w-4" />
+            {copy.liveCta}
+          </a>
+        )}
+        {project.readmeUrl && (
+          <button
+            type="button"
+            className={cardActionLinkClassName}
+            onClick={(event) => {
+              event.stopPropagation()
+              openReadmeModal(project)
+            }}
+          >
+            <FiFileText className="h-4 w-4" />
+            {copy.readmeCta}
+          </button>
+        )}
       </div>
     </article>
   )
@@ -468,27 +420,8 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                 <FiX className="h-5 w-5" />
               </button>
             </div>
-            {selectedProject.media && (
-              <div className="overflow-hidden rounded-2xl border border-neutral-200 dark:border-slate-600">
-                <ImageWithLoader
-                  src={selectedProject.media.src}
-                  alt={selectedProject.media.alt}
-                  containerClassName="h-52 w-full sm:h-60"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                  spinnerDelayMs={0}
-                  minimumLoadingMs={480}
-                  loaderClassName="bg-slate-950/30 dark:bg-slate-900/65"
-                  fallback={
-                    <div role="img" aria-label={selectedProject.media.alt} className="flex h-full w-full items-center justify-center bg-neutral-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
-                      <CommandLineIcon className="h-10 w-10" aria-hidden="true" />
-                    </div>
-                  }
-                />
-              </div>
-            )}
             <p className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-              {selectedProject.summary.trim() || (locale === 'es' ? 'Sin descripcion disponible.' : 'No description available.')}
+              {selectedProject.summary.trim() || (locale === 'es' ? 'Sin descripción disponible.' : 'No description available.')}
             </p>
             {selectedProject.highlights.length > 0 && (
               <ul className="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
