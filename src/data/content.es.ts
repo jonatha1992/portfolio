@@ -7,9 +7,9 @@ export const profileContentEs: ProfileContent = {
     roles: ['Ingeniero de Software Full Stack', 'Senior Python Developer', 'Data Engineer'],
     availability: 'Disponible para nuevas oportunidades laborales',
     summary:
-      'Ingeniero de Software Full Stack, Senior Python Developer y Data Engineer orientado a automatizar procesos críticos, diseñar pipelines resilientes y construir productos digitales end-to-end. Desde 2015 formo parte del personal IT de la Policía de Seguridad Aeroportuaria, liderando iniciativas con Python, Django, Flask, React y Next.js, e integrando IA generativa para acelerar análisis, documentación técnica y toma de decisiones.',
+      'Desarrollo sistemas, productos web y herramientas de datos. Desde 2015 trabajo en tecnología para la Policía de Seguridad Aeroportuaria, con Python, React y bases de datos.',
     location: 'Buenos Aires, Argentina',
-    photo: '/assets/profile/jonathan-correa.jpg',
+    photo: '/assets/profile/jonathan-correa.webp',
   },
   skills: [
     {
@@ -101,7 +101,7 @@ export const profileContentEs: ProfileContent = {
     {
       title: 'Automatización estratégica en PSA',
       description:
-        'Automatizaciones que liberaron cientos de horas anuales, reduciendo errores manuales y asegurando trazabilidad end-to-end sobre pipelines críticos.',
+        'Automatizaciones que liberaron cientos de horas anuales, reduciendo errores manuales y asegurando trazabilidad sobre procesos de datos críticos.',
       tech: ['Python', 'Airflow', 'Power BI', 'Jupyter'],
       impact: 'Procesos críticos 100% trazables y respuesta operacional más rápida.',
     },

@@ -8,6 +8,9 @@ import { FiGithub, FiExternalLink, FiFileText, FiX } from 'react-icons/fi'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { getTechIcon } from '../icons/techIcons'
+import { groupProjects } from '../data/projectGroups'
+import ProjectCard from '../components/common/ProjectCard'
+
 import { getPortfolioProjectsFromFirebase } from '../services/firebase'
 
 type ProjectsSectionProps = {
@@ -93,7 +96,7 @@ function resolveMarkdownResourceUrl(rawUrl: string | undefined, baseUrl: string)
 
 const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSectionProps) => {
   const [firebaseProjects, setFirebaseProjects] = useState<Project[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(externalInfo.enabled)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [readmeProject, setReadmeProject] = useState<Project | null>(null)
   const [readmeContent, setReadmeContent] = useState('')
@@ -102,7 +105,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const [readmeError, setReadmeError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Only fetch from Firebase if enabled
+
     if (externalInfo.enabled) {
       setIsLoading(true)
       getPortfolioProjectsFromFirebase(locale)
@@ -123,7 +126,24 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       return
     }
 
+    const opener = document.activeElement as HTMLElement | null
+    const dialogTitle = document.getElementById(readmeProject ? 'readme-modal-title' : 'project-modal-title')
+    const dialog = dialogTitle?.closest('[role="dialog"]')
+    const focusableSelector = 'button, a[href], input, textarea, [tabindex="0"]'
+    dialog?.querySelector<HTMLElement>(focusableSelector)?.focus()
     const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Tab' && dialog) {
+        const controls = Array.from(dialog.querySelectorAll<HTMLElement>(focusableSelector)).filter((element) => element.getClientRects().length > 0)
+        const first = controls[0]
+        const last = controls[controls.length - 1]
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault()
+          last?.focus()
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault()
+          first?.focus()
+        }
+      }
       if (event.key === 'Escape') {
         if (readmeProject) {
           setReadmeProject(null)
@@ -145,6 +165,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
     return () => {
       window.removeEventListener('keydown', handleEscape)
       document.body.style.overflow = originalOverflow
+      opener?.focus({ preventScroll: true })
     }
   }, [selectedProject, readmeProject])
 
@@ -230,15 +251,6 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
   const displayProjects = externalInfo.enabled && firebaseProjects.length > 0 ? firebaseProjects : projects
   const [integrationBefore, integrationAfter = ''] = copy.integrationDescription.split('{bucket}')
 
-  const getSummaryExcerpt = (summary: string) => {
-    const normalizedSummary = summary.trim()
-
-    if (!normalizedSummary) {
-      return locale === 'es' ? 'Sin descripción disponible.' : 'No description available.'
-    }
-
-    return normalizedSummary
-  }
 
   const closeProjectModal = () => {
     setSelectedProject(null)
@@ -252,23 +264,6 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
     setIsReadmeLoading(false)
   }
 
-  const cardActionLinkClassName =
-    'inline-flex items-center justify-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:border-neutral-300 hover:bg-neutral-50 hover:text-slate-900 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white'
-
-  const renderStatusBadge = (status?: string) => {
-    if (!status) {
-      return null
-    }
-
-    return (
-      <span
-        className="inline-flex items-center rounded-md border border-neutral-200/80 bg-white px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:border-slate-700/80 dark:bg-slate-900 dark:text-slate-300"
-        aria-label={`${copy.statusLabel}: ${status}`}
-      >
-        {status}
-      </span>
-    )
-  }
 
   const openProjectModal = (project: Project) => {
     setSelectedProject(project)
@@ -286,90 +281,8 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
     setReadmeProject(project)
   }
 
-  const handleCardKeyDown = (event: React.KeyboardEvent<HTMLElement>, project: Project) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      openProjectModal(project)
-    }
-  }
+  const groups = groupProjects(displayProjects, locale)
 
-  const renderProject = (project: Project) => (
-    <article
-      key={project.title}
-      className="group flex h-full w-full min-w-0 cursor-pointer flex-col gap-3 overflow-hidden rounded-xl border border-neutral-200 bg-white p-5 text-left transition-colors hover:border-neutral-300 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary/40 dark:border-slate-800 dark:bg-surface dark:hover:border-slate-700"
-      onClick={() => openProjectModal(project)}
-      onKeyDown={(event) => handleCardKeyDown(event, project)}
-      role="button"
-      tabIndex={0}
-      aria-label={project.title}
-    >
-      {project.media && (
-        <div className="-mx-5 -mt-5 mb-1 aspect-[16/10] overflow-hidden rounded-t-xl border-b border-neutral-200 bg-neutral-100 dark:border-slate-800 dark:bg-slate-800">
-          <img
-            src={project.media.src}
-            alt={project.media.alt}
-            loading="lazy"
-            className="h-full w-full object-cover object-top"
-          />
-        </div>
-      )}
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="min-w-0 wrap-break-word font-display text-base font-semibold leading-snug text-slate-900 dark:text-white">
-          {project.title}
-        </h3>
-        {renderStatusBadge(project.status)}
-      </div>
-      {project.role && !['proyecto', 'project'].includes(project.role.trim().toLowerCase()) && (
-        <p className="-mt-2 text-xs text-slate-500 dark:text-slate-400">{project.role}</p>
-      )}
-      <p className="line-clamp-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{getSummaryExcerpt(project.summary)}</p>
-      {project.stack.length > 0 && (
-        <p className="mt-auto text-xs text-slate-500 dark:text-slate-400" aria-label="Project technologies">
-          {project.stack.slice(0, 4).join(' · ')}
-          {project.stack.length > 4 && <span className="text-slate-400 dark:text-slate-500"> +{project.stack.length - 4}</span>}
-        </p>
-      )}
-      <div className="flex flex-wrap items-center gap-2 pt-1">
-        {project.codeUrl && (
-          <a
-            href={project.codeUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={cardActionLinkClassName}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <FiGithub className="h-4 w-4" />
-            {copy.codeCta}
-          </a>
-        )}
-        {project.liveUrl && (
-          <a
-            href={project.liveUrl}
-            target="_blank"
-            rel="noreferrer"
-            className={cardActionLinkClassName}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <FiExternalLink className="h-4 w-4" />
-            {copy.liveCta}
-          </a>
-        )}
-        {project.readmeUrl && (
-          <button
-            type="button"
-            className={cardActionLinkClassName}
-            onClick={(event) => {
-              event.stopPropagation()
-              openReadmeModal(project)
-            }}
-          >
-            <FiFileText className="h-4 w-4" />
-            {copy.readmeCta}
-          </button>
-        )}
-      </div>
-    </article>
-  )
 
   return (
     <section id="proyectos" className="w-full space-y-3">
@@ -378,15 +291,25 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
         title={copy.title}
         description={copy.description}
       />
+      {!isLoading && externalInfo.enabled && firebaseProjects.length === 0 && <p role="status">{locale === 'es' ? 'No se pudo cargar el catálogo completo. Se muestra la selección local de proyectos.' : 'The full catalog could not be loaded. Showing the local project selection.'}</p>}
       {isLoading ? (
-        <div className="grid gap-4">
-          <div className="flex items-center justify-center py-10">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-            <span className="ml-3 text-slate-600 dark:text-slate-300">{copy.loadingLabel}</span>
-          </div>
+        <div className="project-loading" role="status">
+          <span>{copy.loadingLabel}</span>
+          <div className="project-grid" aria-hidden="true">{[0, 1, 2].map((key) => <div className="project-skeleton" key={key}><span /><span /><span /></div>)}</div>
         </div>
       ) : (
-      <div className="grid w-full gap-3.5 md:grid-cols-2 lg:grid-cols-3">{displayProjects.map(renderProject)}</div>
+      <div className="project-catalog">
+        <nav className="project-index" aria-label={locale === 'es' ? 'Tipos de trabajo' : 'Types of work'}>
+          {groups.map((group) => <a key={group.id} href={`#grupo-${group.id}`}>{group.title}<span>{group.projects.length}</span></a>)}
+        </nav>
+
+        {groups.map((group) => (
+          <section className="project-group" id={`grupo-${group.id}`} key={group.id} aria-labelledby={`titulo-${group.id}`}>
+            <div className="group-heading" data-reveal><h3 id={`titulo-${group.id}`}>{group.title}</h3><span>{group.projects.length} {locale === 'es' ? 'proyectos' : 'projects'}</span></div>
+            <div className="project-grid">{group.projects.map((project) => <ProjectCard key={project.title} project={project} copy={copy} onOpen={openProjectModal} onReadme={openReadmeModal} />)}</div>
+          </section>
+        ))}
+      </div>
       )}
       {!externalInfo.enabled && (
         <div className="rounded-2xl border border-dashed border-neutral-300 bg-neutral-100/80 p-3 text-sm text-slate-700 dark:border-slate-600 dark:bg-surface/70 dark:text-slate-200">
@@ -400,7 +323,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       )}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 p-4 backdrop-blur-xs"
+          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="project-modal-title"
@@ -419,7 +342,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
                 <h3 id="project-modal-title" className="font-display text-xl font-semibold text-slate-900 dark:text-white">
                   {selectedProject.title}
                 </h3>
-                <p className="text-xs font-medium uppercase tracking-[0.25em] text-primary">{selectedProject.role}</p>
+                <p className="text-[13px] font-medium text-primary-dark dark:text-primary-light">{selectedProject.role}</p>
               </div>
               <button
                 type="button"
@@ -490,7 +413,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
       )}
       {readmeProject && (
         <div
-          className="fixed inset-0 z-60 overflow-y-auto bg-slate-950/80 p-4 backdrop-blur-xs"
+          className="fixed inset-0 z-60 overflow-y-auto bg-slate-950/80 p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby="readme-modal-title"
@@ -503,7 +426,7 @@ const ProjectsSection = ({ projects, externalInfo, copy, locale }: ProjectsSecti
             >
               <header className="flex items-center justify-between gap-3 border-b border-neutral-200 px-4 py-3 dark:border-slate-700 sm:px-5">
                 <div className="min-w-0">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">{copy.readmeCta}</p>
+                  <p className="text-[13px] font-medium text-primary-dark dark:text-primary-light">{copy.readmeCta}</p>
                   <h3
                     id="readme-modal-title"
                     className="truncate font-display text-lg font-semibold text-slate-900 dark:text-white"

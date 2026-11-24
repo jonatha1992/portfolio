@@ -14,9 +14,7 @@ const getPreferredTheme = (): ThemeMode => {
     return stored
   }
 
-  // respeta preferencia del sistema
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-  return prefersDark ? 'dark' : 'light'
+  return 'light'
 }
 
 export const useTheme = () => {

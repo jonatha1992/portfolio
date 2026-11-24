@@ -43,13 +43,13 @@ function App() {
         }}
       >
         <HeroSection personal={personal} contact={contact} socials={socials} copy={ui.hero} />
-        <SkillsSection skills={skills} copy={ui.sections.skills} />
         <ProjectsSection
           projects={projects}
           externalInfo={externalSources.projectsFromFirebase}
           copy={ui.sections.projects}
           locale={locale}
         />
+        <SkillsSection skills={skills} copy={ui.sections.skills} />
         <AchievementsSection achievements={achievements} copy={ui.sections.achievements} />
         <ExperienceSection experience={experience} copy={ui.sections.experience} />
         <EducationSection

@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "node --experimental-strip-types --test --test-concurrency=1 tests/*.test.mjs",
     "build": "tsc -b && vite build && node scripts/write-version.mjs",
     "lint": "eslint .",
     "preview": "vite preview"

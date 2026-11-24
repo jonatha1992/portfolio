@@ -49,7 +49,7 @@ export const uiEs: UiCopy = {
     },
     projects: {
       eyebrow: 'Portfolio',
-      title: 'Proyectos destacados',
+      title: 'Proyectos por trabajo',
       description:
         'Sistemas en producción, herramientas operacionales y arquitecturas de software desarrolladas recientemente.',
       integrationTitle: 'Carga dinámica de proyectos',

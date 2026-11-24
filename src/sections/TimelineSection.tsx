@@ -31,7 +31,7 @@ const TimelineSection = ({ timeline, copy }: TimelineSectionProps) => {
               </div>
               <div className="space-y-2 rounded-xl border border-neutral-200 bg-white p-4.5 dark:border-slate-800 dark:bg-surface">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="inline-flex items-center rounded-md border border-neutral-200 bg-neutral-100 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
+                  <span className="inline-flex items-center rounded-md border border-neutral-200 bg-neutral-100 px-2 py-0.5 text-[13px] font-medium text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                     {badgeLabel}
                   </span>
                   <span className="text-xs text-slate-500 dark:text-slate-400">

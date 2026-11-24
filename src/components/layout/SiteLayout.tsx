@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useScrollReveal } from '../../hooks/useScrollReveal'
 import SiteFooter from './SiteFooter'
 import SiteHeader, { type NavItem } from './SiteHeader'
 
@@ -21,10 +22,12 @@ type SiteLayoutProps = {
 }
 
 const SiteLayout = ({ children, navItems, name, headline, socials, footerNote, footerLinkLabels }: SiteLayoutProps) => {
+  const revealRef = useScrollReveal<HTMLElement>(children)
   return (
-    <div className="min-h-screen bg-neutral-100 text-slate-900 dark:bg-background dark:text-slate-100">
+    <div className="site-shell">
+      <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <SiteHeader navItems={navItems} name={name} headline={headline} />
-      <main className="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-8 md:px-6 md:py-12">{children}</main>
+      <main id="contenido" ref={revealRef} className="page-content">{children}</main>
       <SiteFooter name={name} socials={socials} note={footerNote} linkLabels={footerLinkLabels} />
     </div>
   )

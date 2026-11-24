@@ -1,62 +1,220 @@
 @import 'tailwindcss';
-
 @plugin '@tailwindcss/typography';
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-
-  --color-primary: #1d4ed8;
-  --color-primary-light: #60a5fa;
-  --color-primary-dark: #1e3a8a;
-
-  --color-accent: #f59e0b;
-  --color-background: #0f172a;
-  --color-surface: #1f2937;
-
-  --color-neutral-50: #f8fafc;
-  --color-neutral-100: #f1f5f9;
-  --color-neutral-200: #e2e8f0;
-  --color-neutral-300: #cbd5e1;
-  --color-neutral-400: #94a3b8;
-  --color-neutral-500: #64748b;
-  --color-neutral-600: #475569;
-  --color-neutral-700: #334155;
-  --color-neutral-800: #1e293b;
-  --color-neutral-900: #0f172a;
-
-  --shadow-glow: 0 4px 12px rgba(15, 23, 42, 0.06);
-  --shadow-soft: 0 2px 6px rgba(15, 23, 42, 0.04);
+  --text-xs: 13px;
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #40553f;
+  --color-primary-light: #a9bba6;
+  --color-primary-dark: #30432f;
+  --color-accent: #8fa68e;
+  --color-background: #1c1e1b;
+  --color-surface: #282b25;
+  --color-white: #faf8f3;
+  --color-neutral-50: #f5f3ed;
+  --color-neutral-100: #f2efe9;
+  --color-neutral-200: #dfdcd2;
+  --color-neutral-300: #ccc9bd;
+  --color-neutral-400: #76766d;
+  --color-neutral-500: #606157;
+  --color-neutral-600: #4f5148;
+  --color-neutral-700: #383b33;
+  --color-neutral-800: #282b25;
+  --color-neutral-900: #1c1e1b;
+  --color-slate-50: #f5f3ed;
+  --color-slate-100: #f2efe9;
+  --color-slate-200: #dfdcd2;
+  --color-slate-300: #ccc9bd;
+  --color-slate-400: #b2b5a8;
+  --color-slate-500: #606157;
+  --color-slate-600: #4f5148;
+  --color-slate-700: #383b33;
+  --color-slate-800: #282b25;
+  --color-slate-900: #1c1e1b;
+  --color-slate-950: #141611;
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+:root {
+  font-family: var(--font-body);
+  color: #1c1c1c;
+  background: #f2efe9;
+  --paper: #f2efe9;
+  --cell: #dfdcd2;
+  --ink: #1c1c1c;
+  --muted: #53564c;
+  --accent: #8fa68e;
+  --focus: #40553f;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  color-scheme: light;
+}
+:root.dark {
+  --paper: #1c1e1b;
+  --cell: #282b25;
+  --ink: #f2efe9;
+  --muted: #c3c6b9;
+  --focus: #a9bba6;
+  color-scheme: dark;
+}
+body { margin: 0; background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; }
+button, a, input { -webkit-tap-highlight-color: transparent; }
+button, a { touch-action: manipulation; }
+button { cursor: pointer; }
+a { text-underline-offset: .22em; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+::selection { background: var(--accent); color: #1c1c1c; }
+section[id], main[id] { scroll-margin-top: 100px; }
+.site-shell { background: var(--paper); color: var(--ink); }
+.page-content, .header-inner { width: min(1280px, calc(100% - 96px)); margin-inline: auto; }
+.page-content { display: flex; flex-direction: column; gap: 128px; padding-block: 48px 112px; }
+.site-header { position: sticky; top: 0; z-index: 40; background: var(--paper); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 84px; gap: 24px; }
+.wordmark { font-size: 28px; font-weight: 700; letter-spacing: -.06em; }
+.desktop-nav, .header-controls { display: flex; align-items: center; gap: 28px; }
+.desktop-nav a { font-size: 15px; }
+.header-controls { gap: 8px; }
+.header-controls button { min-width: 44px; min-height: 44px; border: 0; background: var(--cell); border-radius: 2px; color: var(--ink); }
+.menu-toggle { display: none; }
+.menu-toggle svg { width: 20px; height: 20px; margin: auto; }
+.mobile-nav { padding: 16px 24px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; background: var(--cell); }
+.mobile-nav a { padding-block: 10px; }
+.skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; padding: 12px 20px; background: var(--ink); color: var(--paper); transform: translateY(-160%); }
+.skip-link:focus { transform: none; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(64px, 9vw, 132px); font-weight: 600; line-height: 1.04; letter-spacing: -.065em; margin: 4px 0 32px; }
+.hero-intro { display: flex; justify-content: space-between; gap: 24px; align-items: center; }
+.hero-role { font-size: clamp(22px, 3vw, 36px); letter-spacing: -.025em; max-width: 24ch; }
+.button { display: inline-flex; gap: 16px; align-items: center; justify-content: space-between; padding: 18px 24px; font-size: 16px; font-weight: 500; border-radius: 2px; }
+.button svg, .hero-contact svg { height: 19px; width: 19px; flex-shrink: 0; }
+.button-primary { background: var(--accent); color: #1c1c1c; }
+.hero-details { display: grid; grid-template-columns: .85fr 1.6fr 1fr; gap: 48px; margin-top: 60px; padding: 32px; background: var(--cell); }
+.hero-portrait { display: flex; gap: 18px; align-items: flex-end; }
+.hero-portrait img { width: 80px; height: 100px; object-fit: cover; filter: grayscale(1); }
+.hero-portrait p { font-size: 13px; max-width: 12ch; color: var(--muted); }
+.hero-summary { font-size: 18px; line-height: 1.55; max-width: 50ch; }
+.hero-contact { display: flex; flex-direction: column; gap: 8px; font-size: 14px; }
+.hero-contact a { display: flex; justify-content: space-between; gap: 12px; }
+.hero-contact p { margin-top: 8px; font-size: 13px; color: var(--muted); }
+.section-heading { display: grid; grid-template-columns: 1.05fr 1fr; align-items: end; gap: 32px; margin-bottom: 36px; }
+.section-heading h2 { font-size: clamp(28px, 3.5vw, 48px); line-height: 1.08; letter-spacing: -.045em; font-weight: 500; max-width: 24ch; }
+.section-heading p { color: var(--muted); font-size: 16px; line-height: 1.5; max-width: 50ch; }
+.project-index { display: flex; flex-wrap: wrap; gap: 10px; padding-top: 4px; }
+.project-index a { display: inline-flex; align-items: center; gap: 18px; background: var(--cell); padding: 12px 16px; font-size: 14px; border-radius: 2px; }
+.project-index span { color: var(--muted); font-variant-numeric: tabular-nums; }
+.project-loading { min-height: 430px; }
+.project-loading > span { display: block; margin-bottom: 20px; color: var(--muted); }
+.project-skeleton { height: 330px; background: var(--cell); padding: 24px; }
+.project-skeleton span { display: block; height: 24px; margin-bottom: 24px; background: var(--paper); }
+.project-skeleton span:nth-child(2) { width: 70%; height: 72px; }
+.project-group { margin-top: 56px; }
+.group-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.group-heading h3 { font-size: clamp(24px, 2.5vw, 32px); letter-spacing: -.035em; font-weight: 500; line-height: 1.12; }
+.group-heading > span { font-size: 13px; color: var(--muted); white-space: nowrap; }
+.project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.project-card { position: relative; min-width: 0; display: flex; flex-direction: column; background: var(--cell); border-radius: 2px; }
+.project-card-body { padding: 24px; display: flex; flex-direction: column; gap: 16px; flex: 1; }
+.project-status { font-size: 13px; color: var(--muted); }
+.project-title { text-align: left; display: flex; width: 100%; justify-content: space-between; gap: 12px; font-size: 21px; line-height: 1.2; font-weight: 500; letter-spacing: -.025em; min-height: 76px; }
+.project-title svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 4px; }
+.project-summary { font-size: 16px; line-height: 1.5; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; min-height: 72px; }
+.project-stack { margin-top: auto; font-size: 13px; line-height: 1.5; min-height: 40px; color: var(--muted); }
+.project-actions { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; }
+.project-actions a, .project-actions button { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
+.project-cover { aspect-ratio: 16/10; object-fit: cover; width: 100%; }
+#habilidades article { background: transparent; border: 0; border-radius: 0; padding: 18px 0; display: grid; grid-template-columns: 200px 1fr; gap: 24px; }
+#habilidades > div:last-child { display: block; }
+#habilidades h3 { font-size: 18px; font-weight: 500; margin: 0; }
+#habilidades article span { border: 0; padding: 0; background: transparent; font-size: 16px; color: var(--muted); }
+#habilidades article span:not(:last-child)::after { content: ' /'; margin-left: 8px; }
+#logros article, #experiencia article, #formacion article, #articulos article { border: 0; border-radius: 2px; box-shadow: none; background: var(--cell); padding: 28px; }
+#logros h3, #experiencia h3, #formacion h3, #articulos h3 { font-size: 21px; font-weight: 500; }
+#logros .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#experiencia article { padding: 40px; }
+#timeline > div:last-child { border: 0; padding-left: 0; }
+#timeline article > div:first-child { display: none; }
+#timeline article > div:last-child { border: 0; background: transparent; padding: 16px 0; }
+#timeline article { margin-bottom: 16px; }
+#contacto { padding: 40px; background: var(--accent); color: #1c1c1c; border-radius: 2px; }
+#contacto .section-heading p, #contacto .text-slate-500, #contacto .text-slate-600 { color: #383b33; }
+#contacto > div:last-child > div { background: transparent; border: 0; padding: 0; }
+#contacto a { overflow-wrap: anywhere; }
+#contacto li > span { background: transparent; border: 0; }
+#contacto li > div { min-width: 0; }
+.site-shell > footer { background: var(--paper); border: 0; padding-block: 40px 80px; }
+.site-shell > footer > div { max-width: 1280px; width: calc(100% - 96px); padding: 0; }
+.site-shell > footer > div > div > p:first-child { font-size: clamp(32px, 5vw, 64px); letter-spacing: -.05em; font-weight: 500; }
+.site-shell > footer .text-slate-400 { color: var(--muted); }
+#contacto h3, #contacto > div:last-child p, #contacto > div:last-child span, #contacto a:not(.bg-primary) { color: #1c1c1c; }
+#contacto a:not(.bg-primary) { background: transparent; border: 0; }
+#contacto a.bg-primary { color: #faf8f3; }
+[role='dialog'] { backdrop-filter: none; }
+[role='dialog'] article { border-radius: 2px; border: 0; }
+[role='dialog'] h3 { letter-spacing: -.025em; }
+[data-reveal] { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+  .hero-enter { animation: enter 280ms var(--ease-out) both; }
+  .hero-enter:nth-child(2) { animation-delay: 60ms; }
+  .hero-enter:nth-child(3) { animation-delay: 120ms; }
+  .mobile-nav { transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out); }
+  @starting-style { .mobile-nav { opacity: 0; transform: translateY(-8px); } }
+  [data-reveal] { transition: opacity 280ms var(--ease-out), transform 280ms var(--ease-out); }
+  .reveal-pending { opacity: 0; transform: translateY(10px); }
+  .project-card:nth-child(3n + 2) { transition-delay: 40ms; }
+  .project-card:nth-child(3n + 3) { transition-delay: 80ms; }
+  button, .button, .project-index a { transition: transform 120ms var(--ease-out); }
+  button:active, .button:active, .project-index a:active { transform: scale(.97); }
+  @keyframes enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+@media (hover: hover) and (pointer: fine) {
+  a:hover { text-decoration: underline; }
+  .project-card:not(.reveal-pending):hover { box-shadow: 0 12px 24px #1c1c1c14; }
+  @media (prefers-reduced-motion: no-preference) {
+    .project-card:not(.reveal-pending):hover { transform: translateY(-3px); transition-delay: 0ms; }
   }
 }
-
-html {
-  font-size: 15px;
+@media (prefers-reduced-motion: reduce) {
+  html.scroll-smooth { scroll-behavior: auto; }
+  .animate-pulse, .animate-spin { animation: none; }
+  .reveal-pending { opacity: 1; transform: none; }
 }
-
-body {
-  @apply bg-neutral-100 font-body text-slate-900 antialiased transition-colors duration-300 ease-in-out;
+@media (max-width: 1023px) {
+  .page-content, .header-inner { width: calc(100% - 48px); }
+  .desktop-nav { display: none; }
+  .menu-toggle { display: block; }
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero-details { grid-template-columns: 1fr 1.6fr; gap: 28px; }
+  .hero-contact { grid-column: 1/-1; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px; }
+  .hero-contact p { margin-top: 0; }
+  .site-shell > footer > div { width: calc(100% - 48px); }
 }
-
-.dark body {
-  @apply bg-background text-slate-100;
+@media (max-width: 600px) {
+  .page-content { gap: 80px; padding-top: 28px; padding-bottom: 64px; }
+  .header-inner { min-height: 72px; gap: 12px; }
+  .wordmark { font-size: 26px; }
+  .hero h1 { font-size: clamp(52px, 16vw, 78px); margin-bottom: 24px; letter-spacing: -.065em; max-width: 10ch; }
+  .hero-intro { flex-direction: column; align-items: stretch; gap: 24px; }
+  .hero-role { font-size: 24px; max-width: 22ch; }
+  .hero-details { grid-template-columns: 1fr; padding: 24px; margin-top: 28px; gap: 24px; }
+  .hero-portrait { align-items: center; }
+  .hero-portrait img { width: 56px; height: 70px; }
+  .hero-portrait p { max-width: 18ch; }
+  .hero-summary { font-size: 16px; }
+  .hero-contact { display: flex; font-size: 14px; gap: 12px; }
+  .hero-contact p { font-size: 13px; }
+  .section-heading { grid-template-columns: 1fr; gap: 16px; margin-bottom: 28px; }
+  .section-heading h2 { font-size: 32px; }
+  .project-index { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .project-index a { justify-content: space-between; min-height: 48px; }
+  .project-group { margin-top: 40px; }
+  .group-heading { align-items: flex-end; gap: 12px; }
+  .group-heading h3 { font-size: 25px; max-width: 16ch; }
+  .project-grid { grid-template-columns: 1fr; }
+  .project-title { min-height: 50px; font-size: 22px; }
+  .project-card-body { padding: 24px; }
+  #habilidades article { grid-template-columns: 1fr; gap: 12px; }
+  #logros .grid { grid-template-columns: 1fr; }
+  #experiencia article, #contacto { padding: 24px; }
+  #contacto { margin-inline: -8px; }
+  #contacto .section-heading h2 { font-size: 30px; }
 }
