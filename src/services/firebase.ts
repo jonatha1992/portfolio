@@ -1,4 +1,4 @@
-import { projectCovers } from '../data/projectCovers'
+import { projectCovers, toProjectSlug } from '../data/projectCovers'
 import type {
   FirebaseProject,
   FirebaseTimestamp,
@@ -213,18 +213,7 @@ function getProjectRole(locale: Locale): string {
   return locale === 'es' ? 'Proyecto' : 'Project'
 }
 
-/**
- * Slug estable a partir del titulo, usado como clave de `projectCovers`.
- */
-export function toProjectSlug(title: string): string {
-  return title
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 48)
-}
+export { toProjectSlug }
 
 /**
  * Preferimos la portada local: las URLs de Firebase Storage quedaron inaccesibles

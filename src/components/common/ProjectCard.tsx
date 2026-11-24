@@ -10,11 +10,24 @@ type ProjectCardProps = {
 }
 
 export default function ProjectCard({ project, copy, onOpen, onReadme }: ProjectCardProps) {
+  const coverSrcSet = project.media?.src.endsWith('.webp')
+    ? `${project.media.src.replace(/\.webp$/, '-600.webp')} 600w, ${project.media.src} 1200w`
+    : undefined
+
   return (
     <article className="project-card" data-reveal>
       {project.media && (
-        <img className="project-cover" src={project.media.src} alt={project.media.alt}
-          width="720" height="450" loading="lazy" />
+        <img
+          className="project-cover"
+          src={project.media.src}
+          srcSet={coverSrcSet}
+          sizes={coverSrcSet ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px' : undefined}
+          alt={project.media.alt}
+          width={coverSrcSet ? 1200 : 720}
+          height={coverSrcSet ? 750 : 450}
+          loading="lazy"
+          decoding="async"
+        />
       )}
       <div className="project-card-body">
         <p className="project-status">{project.status || '—'}</p>
